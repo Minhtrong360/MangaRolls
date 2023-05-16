@@ -1,0 +1,15 @@
+/*    /index.html   200
+/story/:id    /index.html   200
+/account/editstory/:id    /index.html   200
+/story/create    /index.html   200
+/stories/:genres    /index.html   200
+/stories/hot-stories    /index.html   200
+/stories/love-stories    /index.html   200
+/login    /index.html   200
+/register    /index.html   200
+/account    /index.html   200
+/subscription    /index.html   200
+/chapter/:id    /index.html   200
+/search    /index.html   200
+/authorName/:authorName /index.html   200
+/artist/:artist /index.html   200
