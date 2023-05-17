@@ -1,8 +1,8 @@
-# TRUYENCUABAN
+# MangaRolls
 
 ## Description
 
-The TruyenCuaBan Web Application is an online platform where users can read a variety of available stories and also create their own stories to share with other users.
+The MangaRolls Web Application is an online platform where users can read a variety of available stories and also create their own stories to share with other users.
 
 ## User Stories
 
@@ -25,7 +25,7 @@ As a user, I want to be able to leave comments on a story that I have read. I sh
 
 ## Technologies Used
 
-The TruyenCuaBan Web Application is built using the following technologies:
+The MangaRolls Web Application is built using the following technologies:
 
 HTML
 CSS
@@ -39,4 +39,4 @@ To get started with the Reading Stories Web Application, follow these steps:
 
 ## Conclusion
 
-The TruyenCuaBan Web Application provides a platform for users to read and share stories. With a clean and intuitive interface, users can easily browse, read, and write stories.
+The MangaRolls Web Application provides a platform for users to read and share stories. With a clean and intuitive interface, users can easily browse, read, and write stories.
