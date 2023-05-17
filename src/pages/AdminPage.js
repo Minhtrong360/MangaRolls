@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Container, Tab, Box, Tabs, Typography } from "@mui/material";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
-
-import Manage from "../features/status/Manage";
 import ChartGeneral from "../features/status/AdminPage";
 import AdminStories from "../features/story/AdminStories";
 

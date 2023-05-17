@@ -35,7 +35,6 @@ function StoryCreate({ isCreating, setIsCreating }) {
 
   const [status, setStatus] = useState("start");
   const [allowGenres, setAllowGenres] = useState([]);
-  const [newError, setNewError] = useState("");
 
   const defaultValues = {
     title: "",
@@ -105,11 +104,8 @@ function StoryCreate({ isCreating, setIsCreating }) {
         const res = await apiService2.get(`/genres`);
 
         setAllowGenres(res.data.data.genresList);
-
-        setNewError("");
       } catch (error) {
         console.log(error);
-        setNewError(error.message);
       }
     };
     getGenres();

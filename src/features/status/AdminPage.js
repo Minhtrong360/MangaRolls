@@ -1,11 +1,4 @@
-import {
-  Box,
-  Container,
-  ButtonGroup,
-  Button,
-  Typography,
-  Divider,
-} from "@mui/material";
+import { Box, Container, ButtonGroup, Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Chart from "chart.js/auto";
 import apiService2 from "../../app/apiService2";
@@ -13,7 +6,6 @@ import moment from "moment";
 import useAuth from "../../hooks/useAuth";
 import LoadingScreen from "../../components/LoadingScreen";
 import AdminUser from "./AdminUser";
-import AdminStories from "../story/AdminStories";
 
 function AdminPage() {
   const [chartData, setChartData] = useState({});

@@ -12,13 +12,11 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import ClickableLinkChips from "../../components/form/ClickableLinkChips";
-import StoryCard from "./StoryCard";
 import useAuth from "../../hooks/useAuth";
 import { getStories } from "./storySlice";
 import LoadingScreen from "../../components/LoadingScreen";
 import { deleteStory } from "./storySlice";
 import { Link } from "react-router-dom";
-import { SelectAutoWidth } from "../../components/form";
 import AdminManageGenres from "../status/AdminManageGenres";
 
 function AdminStories() {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { Box, Grid, Card, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
@@ -8,11 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, FTextField, FUploadAvatar } from "../../components/form";
 import { fData } from "../../utils/numberFormat";
 import { useDispatch, useSelector } from "react-redux";
-import { createStory, updateStory } from "./storySlice";
-
-import { useState } from "react";
-import { BASE_URL2 } from "../../app/config";
-import { cloudinaryUpload } from "../../utils/cloudinary";
+import { updateStory } from "./storySlice";
 
 const UpdateStorySchema = yup.object().shape({
   title: yup.string().required("Title is required"),
@@ -43,7 +39,7 @@ function StoryEdit({ story }) {
   const {
     setValue,
     handleSubmit,
-    reset,
+
     formState: { isSubmitting },
   } = methods;
 

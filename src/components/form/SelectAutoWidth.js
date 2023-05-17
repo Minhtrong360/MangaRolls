@@ -7,8 +7,6 @@ import Select from "@mui/material/Select";
 import { useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getStories } from "../../features/story/storySlice";
 import { useState } from "react";
 import apiService2 from "../../app/apiService2";
 import useAuth from "../../hooks/useAuth";
@@ -29,26 +27,19 @@ const MenuProps = {
 export default function MultipleSelectPlaceholder() {
   // const [personName, setPersonName] = React.useState([]);
 
-  const [isLoading, setIsLoading] = useState(false);
   const [allowGenres, setAllowGenres] = useState([]);
-  const [newError, setNewError] = useState("");
+
   const { user } = useAuth();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const getGenres = async () => {
       if (user) {
-        setIsLoading(true);
         try {
           const res = await apiService2.get("/genres");
           setAllowGenres(res.data.data.genresList);
-          setNewError("");
         } catch (error) {
           console.log(error);
-          setNewError(error.message);
-        } finally {
-          setIsLoading(false);
         }
       }
     };

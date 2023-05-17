@@ -5,10 +5,6 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useEffect } from "react";
-
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getStories } from "../story/storySlice";
 import { useState } from "react";
 import apiService2 from "../../app/apiService2";
 import useAuth from "../../hooks/useAuth";
@@ -16,7 +12,6 @@ import {
   Box,
   Button,
   IconButton,
-  ListItemIcon,
   ListItemSecondaryAction,
   TextField,
 } from "@mui/material";
@@ -37,10 +32,9 @@ const MenuProps = {
 export default function AdminManageGenres() {
   // const [personName, setPersonName] = React.useState([]);
 
-  const [isLoading, setIsLoading] = useState(false);
   const [allowGenres, setAllowGenres] = useState([]);
   const [newGenre, setNewGenre] = useState("");
-  const [newError, setNewError] = useState("");
+
   const { user } = useAuth();
   const [isAdding, setIsAdding] = useState(false);
 
@@ -49,16 +43,11 @@ export default function AdminManageGenres() {
   useEffect(() => {
     const getGenres = async () => {
       if (user) {
-        setIsLoading(true);
         try {
           const res = await apiService2.get("/genres");
           setAllowGenres(res.data.data.genresList);
-          setNewError("");
         } catch (error) {
           console.log(error);
-          setNewError(error.message);
-        } finally {
-          setIsLoading(false);
         }
       }
     };
@@ -71,13 +60,10 @@ export default function AdminManageGenres() {
       await apiService2.post("/genres", { genresName: newGenre });
       setAllowGenres((prevGenres) => [...prevGenres, newGenre]);
       setNewGenre("");
-      setNewError("");
     } catch (error) {
       console.log(error);
-      setNewError(error);
+
       toast.error(error);
-    } finally {
-      setIsAdding(false);
     }
   };
 
@@ -97,12 +83,12 @@ export default function AdminManageGenres() {
           (genre) => genre !== deletingGenre
         );
         setAllowGenres(updatedGenres);
-        setNewError("");
+
         setDeletingGenre(null);
       })
       .catch((error) => {
         console.log(error);
-        setNewError(error.message);
+
         setDeletingGenre(null);
       });
   };

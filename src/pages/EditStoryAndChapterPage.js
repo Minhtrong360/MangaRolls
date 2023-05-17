@@ -12,7 +12,6 @@ import apiService2 from "../app/apiService2";
 
 import { getChaptersOfStory } from "../features/chapter/chapterSlice";
 import ChapterEdit from "../features/chapter/ChapterEdit";
-import StoryCreate from "../features/story/StoryCreate";
 
 function EditStoryAndChapterPage() {
   const [story, setStory] = useState([]);

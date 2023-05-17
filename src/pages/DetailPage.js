@@ -33,7 +33,6 @@ import {
   getSingleStory,
   updateReactionStory,
 } from "../features/story/storySlice";
-import { updateLovedStory } from "../features/user/userSlice";
 import useAuth from "../hooks/useAuth";
 
 import ChapterGeneral from "../features/chapter/ChapterGeneral";
@@ -99,18 +98,6 @@ function DetailPage() {
     }
   };
 
-  const handleLoveStory = () => {
-    if (!user) {
-      navigate("/login");
-    } else {
-      console.log("user");
-      dispatch(updateLovedStory({ userId: user?._id, lovedStory: story?._id }));
-    }
-  };
-
-  const lovedStory = user?.lovedStory?.find(
-    (storyLoved) => storyLoved === story?._id
-  );
   useEffect(() => {
     if (params.id) {
       const getChapters = async () => {

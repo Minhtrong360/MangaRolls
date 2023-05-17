@@ -16,7 +16,6 @@ import { fData } from "../../utils/numberFormat";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserProfile } from "../user/userSlice";
 import LoadingScreen from "../../components/LoadingScreen";
-import { BASE_URL2 } from "../../app/config";
 
 const UpdateUserSchema = yup.object().shape({
   name: yup.string().required("Name is required"),

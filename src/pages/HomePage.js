@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import StoriesWithGenres from "../features/story/StoriesWithGenres";
 import { useDispatch, useSelector } from "react-redux";
 import { getStories } from "../features/story/storySlice";
-import { Container, Stack } from "@mui/material";
+import { Container } from "@mui/material";
 
 function HomePage() {
   const { AllStories, isLoading, error } = useSelector((state) => state.story);
