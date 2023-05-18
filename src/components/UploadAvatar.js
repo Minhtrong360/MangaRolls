@@ -88,7 +88,7 @@ function UploadAvatar({ error, file, helperText, sx, ...other }) {
                 "& img": { objectFit: "cover", width: 1, height: 1 },
               }}
             >
-              <img src={isString(file) ? file : file.preview} />
+              <img src={isString(file) ? file : file.preview} alt="Avatar" />
             </Box>
           )}
 

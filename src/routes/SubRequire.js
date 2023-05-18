@@ -20,7 +20,7 @@ function SubRequire({ children }) {
     navigate(from, { replace: true });
   };
 
-  if (!user?.subscription?.isSubscription) {
+  if (!user?.subscription?.isSubscription || !user?.admin) {
     return (
       <div>
         <Modal
