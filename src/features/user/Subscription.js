@@ -75,19 +75,19 @@ function Subscription() {
       >
         <Stack spacing={3} mt={15}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Typography variant="h5">ĐĂNG KÝ</Typography>
+            <Typography variant="h5">REGISTER</Typography>
           </Box>
 
           <FTextField
             name="bankingAccount"
-            label="Tài khoản"
+            label="Bank Account"
             // value={bankingAccount}
             // onChange={handleSeriChange}
           />
 
           <FSelect
             name="duration"
-            label="Thời hạn đăng ký"
+            label="Duration"
             // value={duration}
             // onChange={handleDurationChange}
           >
@@ -113,7 +113,7 @@ function Subscription() {
               variant="contained"
               // onClick={(e) => handleClickConfirm(e)}
             >
-              Xác nhận
+              Confirm
             </Button>
           </Grid>
           <Grid item xs={6}>
@@ -124,7 +124,7 @@ function Subscription() {
               variant="contained"
               onClick={() => handleClickCancel()}
             >
-              Hủy
+              Cancel
             </Button>
           </Grid>
         </Grid>

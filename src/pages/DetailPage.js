@@ -81,16 +81,20 @@ function DetailPage() {
   const handleClickLike = async (e) => {
     e.preventDefault();
     if (!user) {
-      navigate("/login");
+      const currentLocation = window.location.pathname; // Get the current location
+
+      navigate("/login", { state: { from: currentLocation } }); // Pass the current location as state to the login page
     } else {
       dispatch(updateReactionStory({ storyId: story._id }, { data: "like" }));
     }
   };
   const handleClickDisLike = async (e) => {
     e.preventDefault();
-    console.log("handleClickDisLike");
+
     if (!user) {
-      navigate("/login");
+      const currentLocation = window.location.pathname; // Get the current location
+
+      navigate("/login", { state: { from: currentLocation } }); // Pass the current location as state to the login page
     } else {
       dispatch(
         updateReactionStory({ storyId: story._id }, { data: "disLike" })
@@ -116,7 +120,7 @@ function DetailPage() {
     }
   }, [params]);
 
-  const [currentTab, setCurrentTab] = useState("chương");
+  const [currentTab, setCurrentTab] = useState("Chapter");
   const PROFILE_TAB = [
     {
       value: "Chapter",

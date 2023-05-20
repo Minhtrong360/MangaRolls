@@ -21,29 +21,26 @@ import AdminManageGenres from "../status/AdminManageGenres";
 
 function AdminStories() {
   const [page, setPage] = useState(1);
-  const { AllStories, isLoading } = useSelector((state) => state.story);
-  const [storiesOfUserFake, setStoriesOfUserFake] = useState(AllStories);
+  const { AllStories, isLoading, totalPages } = useSelector(
+    (state) => state.story
+  );
+
   const dispatch = useDispatch();
   const { user } = useAuth();
 
   useEffect(() => {
-    dispatch(getStories({ page, limit: 10000 }));
+    dispatch(getStories({ page }));
   }, [dispatch, page]);
-  useEffect(() => {
-    setStoriesOfUserFake(AllStories);
-  }, [AllStories]);
 
   const handleDeleteUser = async (storyId) => {
     dispatch(deleteStory({ storyId, userId: user?._id }));
-    dispatch(getStories({ page, limit: 10000 }));
+    dispatch(getStories({ page }));
   };
   useEffect(() => {
     window.scrollTo(0, 0); // scroll to top
   }, [page]);
 
-  const offset = 8 * (page - 1);
-  let storiesWithPagination = storiesOfUserFake.slice(offset, offset + 8);
-
+  console.log("totalPages", totalPages);
   return (
     <Box sx={{ position: "relative", height: 1 }}>
       {isLoading ? (
@@ -57,7 +54,7 @@ function AdminStories() {
             alignItems: "center",
           }}
         >
-          {storiesOfUserFake.length > 0 ? (
+          {AllStories.length > 0 ? (
             <>
               <Box
                 sx={{
@@ -87,7 +84,7 @@ function AdminStories() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {storiesWithPagination.map((story) => (
+                    {AllStories.map((story) => (
                       <TableRow key={story?._id}>
                         <TableCell>
                           <Link to={`/story/${story?._id}`}>
@@ -118,7 +115,7 @@ function AdminStories() {
                 <ClickableLinkChips
                   page={page}
                   setPage={setPage}
-                  stories={storiesOfUserFake}
+                  totalPages={totalPages}
                 />
               </Box>
             </>

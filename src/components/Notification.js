@@ -43,7 +43,7 @@ function Notification({ message, onConfirm, onCancel }) {
           }}
         >
           <h2 id="parent-modal-title" style={{ marginBottom: "1rem" }}>
-            THÔNG BÁO
+            ANNOUNCE
           </h2>
           <p id="parent-modal-description">{message}</p>
           <div
@@ -53,8 +53,8 @@ function Notification({ message, onConfirm, onCancel }) {
               justifyContent: "flex-end",
             }}
           >
-            <Button onClick={handleClickOk}>Ok liền</Button>
-            <Button onClick={handleClickHong}>Hong</Button>
+            <Button onClick={handleClickOk}>OK</Button>
+            <Button onClick={handleClickHong}>NO</Button>
           </div>
         </Box>
       </Modal>

@@ -1,5 +1,14 @@
-import React, { useCallback } from "react";
-import { Box, Grid, Card, Typography } from "@mui/material";
+import React, { useCallback, useEffect } from "react";
+import {
+  Box,
+  Grid,
+  Card,
+  Typography,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Autocomplete,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 import { useForm } from "react-hook-form";
@@ -9,6 +18,8 @@ import { FormProvider, FTextField, FUploadAvatar } from "../../components/form";
 import { fData } from "../../utils/numberFormat";
 import { useDispatch, useSelector } from "react-redux";
 import { updateStory } from "./storySlice";
+import apiService2 from "../../app/apiService2";
+import { useState } from "react";
 
 const UpdateStorySchema = yup.object().shape({
   title: yup.string().required("Title is required"),
@@ -20,7 +31,8 @@ const UpdateStorySchema = yup.object().shape({
 
 function StoryEdit({ story }) {
   const { isLoading } = useSelector((state) => state.story);
-
+  const [allowGenres, setAllowGenres] = useState([]);
+  const [selectedGenres, setSelectedGenres] = useState([]);
   const defaultValues = {
     title: story?.title || "",
     authorName: story?.authorName || "",
@@ -30,6 +42,10 @@ function StoryEdit({ story }) {
     summarize: story?.summarize || "",
     cover: story?.cover || "",
   };
+
+  useEffect(() => {
+    setSelectedGenres(story?.genres);
+  }, []);
 
   const methods = useForm({
     resolver: yupResolver(UpdateStorySchema),
@@ -42,7 +58,18 @@ function StoryEdit({ story }) {
 
     formState: { isSubmitting },
   } = methods;
+  useEffect(() => {
+    const getGenres = async () => {
+      try {
+        const res = await apiService2.get(`/genres`);
 
+        setAllowGenres(res.data.data.genresList);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getGenres();
+  }, []);
   const handleDrop = useCallback(
     (acceptedFiles) => {
       const contentFiles = acceptedFiles.map((file) =>
@@ -60,6 +87,11 @@ function StoryEdit({ story }) {
     data.storyId = story._id;
 
     dispatch(updateStory(data));
+  };
+
+  const handleGenresChange = (event, newValue) => {
+    setSelectedGenres(newValue);
+    setValue("genres", newValue);
   };
 
   return (
@@ -86,8 +118,8 @@ function StoryEdit({ story }) {
                     justifyItems: "center",
                   }}
                 >
-                  Cho phép *.jpeg, *.jpg, *.png, *.gif
-                  <br /> kích thước tối đa {fData(3145728)}
+                  Allow *.jpeg, *.jpg, *.png, *.gif
+                  <br /> Max size {fData(3145728)}
                 </Typography>
               }
             />
@@ -103,18 +135,46 @@ function StoryEdit({ story }) {
                 columnGap: 10,
               }}
             >
-              <FTextField name="title" label="Tiêu đề" />
-              <FTextField name="authorName" label="Tác giả" />
+              <FTextField name="title" label="Title" />
+              <FTextField name="authorName" label="Author name" />
 
-              <FTextField name="artist" label="Họa sỹ" />
-              <FTextField name="genres" label="Thể loại" />
-
-              <FTextField name="minimumAge" label="Tuổi tối thiểu" />
+              <FTextField name="artist" label="Artist" />
+              <Autocomplete
+                multiple
+                id="genres"
+                disableCloseOnSelect
+                options={allowGenres}
+                value={selectedGenres}
+                onChange={handleGenresChange}
+                getOptionLabel={(option) => option}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={selected}
+                            color="primary"
+                            value={option}
+                            multiple
+                          />
+                        }
+                        label={option}
+                        multiple
+                      />
+                    </FormGroup>
+                  </li>
+                )}
+                renderInput={(params) => (
+                  <FTextField {...params} name="genres" label="Genres" />
+                )}
+              />
+              <FTextField name="minimumAge" label="Minimum age" />
               <FTextField
                 name="summarize"
                 multiline
                 rows={4}
-                label="Giới thiệu"
+                label="Summarize"
               />
             </Box>
             <Box
@@ -130,7 +190,7 @@ function StoryEdit({ story }) {
                 variant="contained"
                 loading={isSubmitting || isLoading}
               >
-                Lưu lại
+                Save
               </LoadingButton>
             </Box>
           </Card>

@@ -6,6 +6,8 @@ import { deleteComment, getComments } from "./commentSlice";
 import CommentCard from "./CommentCard";
 
 import { COMMENTS_PER_POST } from "../../app/config";
+import { useState } from "react";
+import Notification from "../../components/Notification";
 
 function CommentList({ storyId, chapterId }) {
   const {
@@ -31,6 +33,7 @@ function CommentList({ storyId, chapterId }) {
     }),
     shallowEqual
   );
+  const [deletingComment, setDeletingComment] = useState(null);
 
   let totalComments;
   if (commentsByStory?.length > 0) {
@@ -43,10 +46,14 @@ function CommentList({ storyId, chapterId }) {
   const totalPages = Math.ceil(totalComments / COMMENTS_PER_POST);
   const dispatch = useDispatch();
 
-  const onDelete = (commentId) => {
+  const handleDeleteComment = async (commentId) => {
+    setDeletingComment(commentId);
+  };
+
+  const handleConfirmDelete = () => {
     dispatch(
       deleteComment({
-        commentId: commentId,
+        commentId: deletingComment,
         storyId,
         chapterId,
         page: currentPageByStory,
@@ -76,7 +83,7 @@ function CommentList({ storyId, chapterId }) {
           <CommentCard
             key={comment._id}
             comment={comment}
-            onDelete={onDelete}
+            handleDeleteComment={handleDeleteComment}
             storyId={storyId}
           />
         ))}
@@ -94,7 +101,7 @@ function CommentList({ storyId, chapterId }) {
           <CommentCard
             key={comment._id}
             comment={comment}
-            onDelete={onDelete}
+            handleDeleteComment={handleDeleteComment}
             chapterId={chapterId}
           />
         ))}
@@ -104,6 +111,13 @@ function CommentList({ storyId, chapterId }) {
 
   return (
     <Stack spacing={1.5}>
+      {deletingComment && (
+        <Notification
+          message={`Are you sure you want to delete this comment?`}
+          onConfirm={handleConfirmDelete}
+          onCancel={() => setDeletingComment(null)}
+        />
+      )}
       {commentsByStory && (
         <>
           <Stack

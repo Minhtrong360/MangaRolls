@@ -15,7 +15,7 @@ import CommentReaction from "./CommentReaction";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CommentForm from "./CommentForm";
 
-function CommentCard({ comment, onDelete, storyId, chapterId }) {
+function CommentCard({ comment, handleDeleteComment, storyId, chapterId }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const [isEdit, setIsEdit] = useState(false);
@@ -31,7 +31,7 @@ function CommentCard({ comment, onDelete, storyId, chapterId }) {
   const handleDelete = () => {
     setAnchorEl(null);
 
-    onDelete(comment._id);
+    handleDeleteComment(comment._id);
   };
 
   const handleEdit = () => {

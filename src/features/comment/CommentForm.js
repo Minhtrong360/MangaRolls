@@ -6,6 +6,8 @@ import SendIcon from "@mui/icons-material/Send";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { createComment, updateComment } from "./commentSlice";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 function CommentForm({ storyId, commentID, setIsEdit, isEdit, chapterId }) {
   const { commentsById } = useSelector(
@@ -22,9 +24,14 @@ function CommentForm({ storyId, commentID, setIsEdit, isEdit, chapterId }) {
 
   const [content, setContent] = useState(text);
   const dispatch = useDispatch();
-
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!user) {
+      const currentLocation = window.location.pathname; // Get the current location
+      navigate("/login", { state: { from: currentLocation } }); // Pass the current location as state to the login page
+    }
     if (!isEdit) {
       dispatch(createComment({ storyId, chapterId, content }));
       setContent("");
@@ -51,7 +58,7 @@ function CommentForm({ storyId, commentID, setIsEdit, isEdit, chapterId }) {
           fullWidth
           size="small"
           value={content}
-          placeholder="Để lại bình luận"
+          placeholder="What do you think?"
           onChange={(event) => setContent(event.target.value)}
           sx={{
             ml: 2,

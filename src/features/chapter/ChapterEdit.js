@@ -6,14 +6,18 @@ import { Alert } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { deleteChapter } from "./chapterSlice";
 import ChapterCreate from "./ChapterCreate";
+import Notification from "../../components/Notification";
 
 function ChapterEdit({ chapter, loading, error, storyEditing }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
+  const [deletingChapter, setDeletingChapter] = useState(null);
 
-  const handleDelete = (e) => {
-    e.preventDefault();
+  const handleDeleteChapter = async (title) => {
+    setDeletingChapter(title);
+  };
+  const handleConfirmDelete = () => {
     dispatch(deleteChapter({ chapterId: chapter._id }));
   };
 
@@ -81,7 +85,7 @@ function ChapterEdit({ chapter, loading, error, storyEditing }) {
                                         flexDirection: "column",
                                       }}
                                     >
-                                      {chapter?.title}
+                                      Chương {chapter?.number + 1}
                                     </Typography>
                                     <Typography
                                       color="text.primary"
@@ -100,21 +104,21 @@ function ChapterEdit({ chapter, loading, error, storyEditing }) {
                                           navigate(`/chapter/${chapter._id}`)
                                         }
                                       >
-                                        Đọc
+                                        Read
                                       </Button>
                                       <Button
                                         onClick={(e) => {
                                           setIsEditing(true);
                                         }}
                                       >
-                                        Chỉnh sửa
+                                        Edit
                                       </Button>
                                       <Button
-                                        onClick={(e) => {
-                                          handleDelete(e);
+                                        onClick={() => {
+                                          handleDeleteChapter(chapter?.title);
                                         }}
                                       >
-                                        Xóa
+                                        Delete
                                       </Button>
                                     </Box>
                                   </Box>
@@ -140,6 +144,13 @@ function ChapterEdit({ chapter, loading, error, storyEditing }) {
               </>
             )}
           </>
+        )}
+        {deletingChapter && (
+          <Notification
+            message={`Are you sure you want to delete "${deletingChapter}"?`}
+            onConfirm={handleConfirmDelete}
+            onCancel={() => setDeletingChapter(null)}
+          />
         )}
       </Box>
     </Container>

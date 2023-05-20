@@ -28,7 +28,7 @@ function CreateStoryAndChapterPage() {
                     justifyContent: "center",
                   }}
                 >
-                  Truyện của bạn
+                  YOUR STORY
                 </Typography>
                 <Box
                   p={2}

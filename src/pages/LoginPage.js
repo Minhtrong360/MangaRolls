@@ -40,7 +40,11 @@ function LoginPage() {
   } = methods;
 
   const onSubmit = async (data) => {
-    const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname
+      ? location.state?.from?.pathname
+      : location.state?.from
+      ? location.state?.from
+      : "/";
     let { email, password } = data;
 
     try {

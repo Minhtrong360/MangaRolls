@@ -9,21 +9,21 @@ import AccountSocialLinks from "../features/user/AccountSocialLinks";
 import StoriesListOfUser from "../features/story/StoriesListOfUser";
 
 function AccountPage() {
-  const [currentTab, setCurrentTab] = useState("giới thiệu");
+  const [currentTab, setCurrentTab] = useState("general");
 
   const ACCOUNT_TABS = [
     {
-      value: "giới thiệu",
+      value: "general",
       icon: <AccountBoxIcon sx={{ fontSize: 30, marginTop: 4 }} />,
       component: <AccountGeneral />,
     },
+    // {
+    //   value: "liên kết",
+    //   icon: <ShareIcon sx={{ fontSize: 30, marginTop: 4 }} />,
+    //   component: <AccountSocialLinks profile={{}} />,
+    // },
     {
-      value: "liên kết",
-      icon: <ShareIcon sx={{ fontSize: 30, marginTop: 4 }} />,
-      component: <AccountSocialLinks profile={{}} />,
-    },
-    {
-      value: "truyện của bạn",
+      value: "your stories",
       icon: <MenuBookIcon sx={{ fontSize: 30, marginTop: 4 }} />,
       component: <StoriesListOfUser />,
     },
@@ -36,7 +36,7 @@ function AccountPage() {
         gutterBottom
         sx={{ my: 3, fontSize: 30, fontWeight: 800 }}
       >
-        TÀI KHOẢN
+        ACCOUNT
       </Typography>
       <Tabs
         value={currentTab}

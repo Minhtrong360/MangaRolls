@@ -5,8 +5,10 @@ import apiService2 from "../../app/apiService2";
 import { getChaptersOfStory } from "./chapterSlice";
 import {
   Box,
+  Breadcrumbs,
   Button,
   Container,
+  Link,
   Paper,
   Stack,
   Typography,
@@ -80,150 +82,168 @@ function ChapterContent() {
     zIndex: 2,
   }));
 
+  console.log("chapter", chapter);
+
   return (
     <Container sx={{ my: 5, overflowAnchor: "none" }}>
       <Box sx={{ position: "relative", height: 1 }}>
         {loading ? (
           <LoadingScreen />
         ) : (
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: "flex",
-              flexDirection: "column",
-              position: "relative",
-            }}
-          >
-            <Typography
-              gutterBottom
-              variant="body1"
-              component="div"
-              noWrap
+          <>
+            <Breadcrumbs aria-label="breadcrumb" sx={{ fontSize: "1.5em" }}>
+              <Link underline="hover" color="inherit" href="/">
+                MangaRolls
+              </Link>
+              <Link
+                underline="hover"
+                color="inherit"
+                href={`/story/${chapter?.ofStory?._id}`}
+              >
+                {chapter?.ofStory?.title}
+              </Link>
+            </Breadcrumbs>
+            <Box
               sx={{
-                fontSize: 30,
-                fontWeight: 800,
+                flexGrow: 1,
                 display: "flex",
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "center",
+                flexDirection: "column",
+                position: "relative",
               }}
             >
-              <span>{`Chương ${chapter?.number + 1}: ${chapter?.title}`}</span>
-            </Typography>
+              <Typography
+                gutterBottom
+                variant="body1"
+                component="div"
+                noWrap
+                sx={{
+                  fontSize: 30,
+                  fontWeight: 800,
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
+                <span>{`Chương ${chapter?.number + 1}: ${
+                  chapter?.title
+                }`}</span>
+              </Typography>
 
-            <Stack
-              sx={{
-                minHeight: "100vh",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {chapter?.content?.map((file) => (
-                <img
-                  key={file}
-                  src={file}
-                  alt="preview"
-                  style={{
-                    maxWidth: "100%",
-                    maxHeight: "100%",
-                    marginBottom: 10,
+              <Stack
+                sx={{
+                  minHeight: "100vh",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {chapter?.content?.map((file) => (
+                  <img
+                    key={file}
+                    src={file}
+                    alt="preview"
+                    style={{
+                      maxWidth: "100%",
+                      maxHeight: "100%",
+                      marginBottom: 10,
+                    }}
+                  />
+                ))}
+              </Stack>
+
+              <Stack
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  padding: 2,
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Button
+                  onClick={async () => {
+                    let index = chaptersOfStory.findIndex(
+                      (chapter) => chapter._id === params.id
+                    );
+
+                    if (index === chaptersOfStory.length - 1) {
+                      index = -1;
+                    }
+
+                    const prevChapterId = chaptersOfStory[index + 1]._id;
+                    navigate(`/chapter/${prevChapterId}`);
                   }}
-                />
-              ))}
-            </Stack>
+                >
+                  <ArrowCircleLeftIcon sx={{ fontSize: "48px", m: 1.5 }} />
+                </Button>
+                <Button
+                  onClick={async () => {
+                    let index = chaptersOfStory.findIndex(
+                      (chapter) => chapter._id === params.id
+                    );
+                    if (index === 0) {
+                      index = chaptersOfStory.length;
+                    }
 
-            <Stack
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                padding: 2,
-                justifyContent: "flex-end",
-              }}
-            >
-              <Button
-                onClick={async () => {
-                  let index = chaptersOfStory.findIndex(
-                    (chapter) => chapter._id === params.id
-                  );
-
-                  if (index === chaptersOfStory.length - 1) {
-                    index = -1;
-                  }
-
-                  const prevChapterId = chaptersOfStory[index + 1]._id;
-                  navigate(`/chapter/${prevChapterId}`);
-                }}
-              >
-                <ArrowCircleLeftIcon sx={{ fontSize: "48px", m: 1.5 }} />
-              </Button>
-              <Button
-                onClick={async () => {
-                  let index = chaptersOfStory.findIndex(
-                    (chapter) => chapter._id === params.id
-                  );
-                  if (index === 0) {
-                    index = chaptersOfStory.length;
-                  }
-
-                  const nextChapterId = chaptersOfStory[index - 1]._id;
-                  navigate(`/chapter/${nextChapterId}`);
-                }}
-              >
-                <ArrowCircleRightIcon sx={{ fontSize: "48px", m: 2 }} />
-              </Button>
-
-              <Box>
-                <Button onClick={toggleShowChapters}>
-                  <LibraryBooksIcon sx={{ fontSize: "48px", m: 2 }} />
+                    const nextChapterId = chaptersOfStory[index - 1]._id;
+                    navigate(`/chapter/${nextChapterId}`);
+                  }}
+                >
+                  <ArrowCircleRightIcon sx={{ fontSize: "48px", m: 2 }} />
                 </Button>
 
-                {showChapters && (
-                  <ChatBoxWrapper>
-                    <Typography sx={{ fontSize: "28px" }}>
-                      LIST OF CHAPTERS
-                    </Typography>
-                    <Stack p={1} />
-                    <Box
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      {chaptersOfStory?.map((chapter) => (
-                        <Button
-                          key={chapter?._id}
-                          onClick={() => {
-                            setShowChapters(!showChapters);
-                            navigate(`/chapter/${chapter._id}`);
-                          }}
-                          sx={{
-                            alignContent: "center",
-                            color: "white",
-                            cursor: "pointer",
-                            "&:hover": { color: "primary.main" },
-                            marginLeft: 0,
-                            paddingLeft: 0,
-                            textAlign: "left",
-                            fontSize: "24px",
-                          }}
-                        >
-                          Chương {chapter?.number + 1}
-                        </Button>
-                      ))}
-                    </Box>
-                  </ChatBoxWrapper>
-                )}
-              </Box>
-              <Box>
-                <Button onClick={toggleShowComments}>
-                  <InsertCommentIcon sx={{ fontSize: "48px", m: 2 }} />
-                </Button>
+                <Box>
+                  <Button onClick={toggleShowChapters}>
+                    <LibraryBooksIcon sx={{ fontSize: "48px", m: 2 }} />
+                  </Button>
 
-                {showComments && <ChatBox chapterId={params.id} />}
-              </Box>
-            </Stack>
-          </Box>
+                  {showChapters && (
+                    <ChatBoxWrapper>
+                      <Typography sx={{ fontSize: "28px" }}>
+                        LIST OF CHAPTERS
+                      </Typography>
+                      <Stack p={1} />
+                      <Box
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-start",
+                        }}
+                      >
+                        {chaptersOfStory?.map((chapter) => (
+                          <Button
+                            key={chapter?._id}
+                            onClick={() => {
+                              setShowChapters(!showChapters);
+                              navigate(`/chapter/${chapter._id}`);
+                            }}
+                            sx={{
+                              alignContent: "center",
+                              color: "white",
+                              cursor: "pointer",
+                              "&:hover": { color: "primary.main" },
+                              marginLeft: 0,
+                              paddingLeft: 0,
+                              textAlign: "left",
+                              fontSize: "24px",
+                            }}
+                          >
+                            Chương {chapter?.number + 1}
+                          </Button>
+                        ))}
+                      </Box>
+                    </ChatBoxWrapper>
+                  )}
+                </Box>
+                <Box>
+                  <Button onClick={toggleShowComments}>
+                    <InsertCommentIcon sx={{ fontSize: "48px", m: 2 }} />
+                  </Button>
+
+                  {showComments && <ChatBox chapterId={params.id} />}
+                </Box>
+              </Stack>
+            </Box>
+          </>
         )}
       </Box>
     </Container>

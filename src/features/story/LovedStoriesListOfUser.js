@@ -74,7 +74,7 @@ function LovedStoriesListOfUser() {
               justifyContent: "space-between",
             }}
           >
-            <span>BẠN ĐÃ THÍCH</span>
+            <span>YOU HAVE SAVED</span>
           </Typography>
         </Stack>
 

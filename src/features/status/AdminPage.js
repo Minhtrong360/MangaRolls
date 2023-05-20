@@ -110,23 +110,6 @@ function AdminPage() {
               alignItems: "center",
             }}
           >
-            <Typography sx={{ fontSize: 20, fontWeight: 600 }}>
-              GROWTH CHART
-            </Typography>
-            <ButtonGroup style={{ margin: "10px" }}>
-              <Button
-                variant={timeRange === "7days" ? "contained" : "outlined"}
-                onClick={() => handleTimeRangeChange("7days")}
-              >
-                Last 7 days
-              </Button>
-              <Button
-                variant={timeRange === "month" ? "contained" : "outlined"}
-                onClick={() => handleTimeRangeChange("month")}
-              >
-                Last month
-              </Button>
-            </ButtonGroup>
             <Box
               sx={{
                 display: "flex",
@@ -141,10 +124,33 @@ function AdminPage() {
                 {isLoading ? (
                   <LoadingScreen />
                 ) : (
-                  <canvas
-                    id="myChart"
-                    style={{ display: isLoading ? "none" : "block" }}
-                  ></canvas>
+                  <>
+                    <Typography sx={{ fontSize: 20, fontWeight: 600 }}>
+                      GROWTH CHART
+                    </Typography>
+                    <ButtonGroup style={{ margin: "10px" }}>
+                      <Button
+                        variant={
+                          timeRange === "7days" ? "contained" : "outlined"
+                        }
+                        onClick={() => handleTimeRangeChange("7days")}
+                      >
+                        Last 7 days
+                      </Button>
+                      <Button
+                        variant={
+                          timeRange === "month" ? "contained" : "outlined"
+                        }
+                        onClick={() => handleTimeRangeChange("month")}
+                      >
+                        Last month
+                      </Button>
+                    </ButtonGroup>
+                    <canvas
+                      id="myChart"
+                      style={{ display: isLoading ? "none" : "block" }}
+                    ></canvas>
+                  </>
                 )}
               </Box>
             </Box>

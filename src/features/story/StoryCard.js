@@ -8,6 +8,17 @@ import { useDispatch } from "react-redux";
 
 import { deleteStory } from "./storySlice";
 import StoryGenenal from "./StoryGeneral";
+import { styled } from "@mui/material/styles";
+import Notification from "../../components/Notification";
+
+const StyledLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  textDecoration: "none",
+  "&:hover": {
+    color: "orange",
+    textDecoration: "none",
+  },
+}));
 
 function StoryCard({
   story,
@@ -21,10 +32,13 @@ function StoryCard({
   const dispatch = useDispatch();
 
   const [isEditing, setIsEditing] = useState(false);
-
+  const [deletingStory, setDeletingStory] = useState(null);
   const navigate = useNavigate();
-
-  const handleDeleteStory = () => {
+  const handleDeleteStory = async (title) => {
+    setDeletingStory(title);
+  };
+  const handleConfirmDelete = () => {
+    console.log("story._id", story._id);
     dispatch(deleteStory({ storyId: story._id, userId }));
 
     setStoriesOfUserFake((prevStories) =>
@@ -94,7 +108,14 @@ function StoryCard({
                       textAlign: "justify",
                     }}
                   >
-                    Author: {story?.authorName}
+                    Author:
+                    {story?.authorName !== "Đang Cập Nhật" ? (
+                      <StyledLink to={`/author/${story?.authorName}`}>
+                        {story?.authorName}
+                      </StyledLink>
+                    ) : (
+                      story?.authorName
+                    )}
                   </Typography>
                   <Typography
                     color="text.primary"
@@ -185,7 +206,7 @@ function StoryCard({
                     right: 0,
                     top: 0,
                   }}
-                  onClick={handleDeleteStory}
+                  onClick={() => handleDeleteStory(story?.title)}
                 >
                   Delete
                 </LoadingButton>
@@ -203,6 +224,13 @@ function StoryCard({
               >
                 <StoryGenenal setIsEditing={setIsEditing} />
               </Box>
+            )}
+            {deletingStory && (
+              <Notification
+                message={`Are you sure you want to delete "${deletingStory}"?`}
+                onConfirm={handleConfirmDelete}
+                onCancel={() => setDeletingStory(null)}
+              />
             )}
           </Box>
         </Grid>

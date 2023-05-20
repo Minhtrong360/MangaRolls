@@ -34,13 +34,12 @@ export default function MultipleSelectPlaceholder() {
 
   useEffect(() => {
     const getGenres = async () => {
-      if (user) {
-        try {
-          const res = await apiService2.get("/genres");
-          setAllowGenres(res.data.data.genresList);
-        } catch (error) {
-          console.log(error);
-        }
+      try {
+        const res = await apiService2.get("/genres");
+
+        setAllowGenres(res.data.data.genresList);
+      } catch (error) {
+        console.log(error);
       }
     };
     getGenres();

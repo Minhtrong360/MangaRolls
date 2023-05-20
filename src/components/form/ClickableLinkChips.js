@@ -10,7 +10,6 @@ export default function ClickableLinkChips({
   totalPages,
 }) {
   const [btns, setBtns] = useState([]);
-
   useEffect(() => {
     if (totalPages) {
       const newBtns = [];

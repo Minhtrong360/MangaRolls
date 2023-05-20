@@ -136,21 +136,17 @@ export const deleteChapter =
   async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      let text = "Do you want to delete it?";
       let storyId;
-      if (window.confirm(text) === true) {
-        const response = await apiService2.delete(`/chapters/${chapterId}`);
-        storyId = response.data.data.ofStory._id;
-        dispatch(
-          slice.actions.removeChapterSuccess({
-            ...response.data.data,
-            chapterId,
-          })
-        );
-        toast.success("Delete chapter successfully");
-      } else {
-        dispatch(slice.actions.removeChapterNotSuccess());
-      }
+
+      const response = await apiService2.delete(`/chapters/${chapterId}`);
+      storyId = response.data.data.ofStory._id;
+      dispatch(
+        slice.actions.removeChapterSuccess({
+          ...response.data.data,
+          chapterId,
+        })
+      );
+      toast.success("Delete chapter successfully");
 
       dispatch(getChaptersOfStory({ storyId }));
     } catch (error) {

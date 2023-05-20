@@ -35,7 +35,7 @@ function StoryCreate({ isCreating, setIsCreating }) {
 
   const [status, setStatus] = useState("start");
   const [allowGenres, setAllowGenres] = useState([]);
-
+  const [selectedGenres, setSelectedGenres] = useState([]);
   const defaultValues = {
     title: "",
     authorName: "",
@@ -91,10 +91,13 @@ function StoryCreate({ isCreating, setIsCreating }) {
     setStatus("started");
   };
   const handleCreateOther = (e) => {
+    console.log("handleCreateOther");
     e.preventDefault();
     setStatus("start");
-
+    setSelectedGenres([]);
     reset(defaultValues);
+    setValue("genres", null);
+
     setIsCreating(true);
   };
 
@@ -110,25 +113,11 @@ function StoryCreate({ isCreating, setIsCreating }) {
     };
     getGenres();
   }, []);
-  //todo
 
-  // let allowGenres = [
-  //   "Action",
-  //   "Adventure",
-  //   "Chuyển sinh",
-  //   "Comedy",
-  //   "Cổ đại",
-  //   "Drama",
-  //   "Fantasy",
-  //   "Manhwa",
-  //   "Magic",
-  //   "Mystery",
-  //   "Ngôn tình",
-  //   "Thể thao",
-  //   "Trọng sinh",
-  //   "Truyện màu",
-  //   "Xuyên không",
-  // ];
+  const handleGenresChange = (event, newValue) => {
+    setSelectedGenres(newValue);
+    setValue("genres", newValue);
+  };
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -154,8 +143,8 @@ function StoryCreate({ isCreating, setIsCreating }) {
                     justifyItems: "center",
                   }}
                 >
-                  Cho phép *.jpeg, *.jpg, *.png, *.gif
-                  <br /> kích thước tối đa {fData(3145728)}
+                  Allow *.jpeg, *.jpg, *.png, *.gif
+                  <br /> Max size {fData(3145728)}
                 </Typography>
               }
             />
@@ -171,9 +160,9 @@ function StoryCreate({ isCreating, setIsCreating }) {
                 columnGap: 10,
               }}
             >
-              <FTextField name="title" label="Tiêu đề" />
-              <FTextField name="authorName" label="Tác giả" />
-              <FTextField name="artist" label="Họa sỹ" />
+              <FTextField name="title" label="Title" />
+              <FTextField name="authorName" label="Author name" />
+              <FTextField name="artist" label="Artist" />
 
               {/* Use Autocomplete for genres */}
               <Autocomplete
@@ -181,9 +170,8 @@ function StoryCreate({ isCreating, setIsCreating }) {
                 id="genres"
                 disableCloseOnSelect
                 options={allowGenres}
-                onChange={(event, newValue) => {
-                  setValue("genres", [...newValue]);
-                }}
+                value={selectedGenres}
+                onChange={handleGenresChange}
                 getOptionLabel={(option) => option}
                 renderOption={(props, option, { selected }) => (
                   <li {...props}>
@@ -204,16 +192,16 @@ function StoryCreate({ isCreating, setIsCreating }) {
                   </li>
                 )}
                 renderInput={(params) => (
-                  <FTextField {...params} name="genres" label="Thể loại" />
+                  <FTextField {...params} name="genres" label="Genres" />
                 )}
               />
 
-              <FTextField name="minimumAge" label="Tuổi tối thiểu" />
+              <FTextField name="minimumAge" label="Minimum Age" />
               <FTextField
                 name="summarize"
                 multiline
                 rows={4}
-                label="Giới thiệu"
+                label="Summarize"
               />
             </Box>
             <Box
@@ -230,7 +218,7 @@ function StoryCreate({ isCreating, setIsCreating }) {
                   variant="contained"
                   loading={isSubmitting || isLoading}
                 >
-                  Tạo truyện
+                  Create
                 </LoadingButton>
               )}
 
@@ -241,7 +229,7 @@ function StoryCreate({ isCreating, setIsCreating }) {
                   loading={isSubmitting || isLoading}
                   disabled
                 >
-                  Tạo truyện
+                  Create
                 </LoadingButton>
               )}
 
@@ -252,7 +240,7 @@ function StoryCreate({ isCreating, setIsCreating }) {
                 onClick={(e) => handleCreateOther(e)}
                 sx={{ ml: 2 }}
               >
-                Tạo truyện mới
+                Create a new one
               </LoadingButton>
             </Box>
           </Card>

@@ -140,7 +140,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                 textAlign: "center",
               }}
             >
-              CHƯƠNG MỚI
+              New chapter
             </Typography>
           )}
           <Card sx={{ p: 1 }}>
@@ -156,9 +156,9 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
               >
                 <Typography sx={{ mb: 2, fontSize: "26px" }}>
                   {" "}
-                  Tiêu để chương{" "}
+                  Chapter title{" "}
                 </Typography>
-                <FTextField name="title" label="Tiêu đề" />
+                <FTextField name="title" label="Title" />
               </Box>
 
               <Grid item xs={12} md={4}>
@@ -166,7 +166,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                   <Typography
                     sx={{ py: 2, px: 2, textAlign: "center", fontSize: "26px" }}
                   >
-                    Ảnh bìa
+                    Cover
                   </Typography>
 
                   {avatar.length > 0 && (
@@ -194,8 +194,8 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                             color: "text.secondary",
                           }}
                         >
-                          Cho phép *.jpeg, *.jpg, *.png, *.gif
-                          <br /> kích thước tối đa {fData(3145728)}
+                          Allow *.jpeg, *.jpg, *.png, *.gif
+                          <br /> Max size {fData(3145728)}
                         </Typography>
                       }
                     />
@@ -205,7 +205,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                   <Typography
                     sx={{ py: 2, px: 2, textAlign: "center", fontSize: "26px" }}
                   >
-                    Nội dung chương
+                    Chapter content
                   </Typography>
                   {content.map((file) => (
                     <img
@@ -236,8 +236,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                           color: "text.secondary",
                         }}
                       >
-                        Cho phép *.jpeg, *.jpg, *.png, *.gif
-                        <br /> kích thước tối đa {fData(3145728)}
+                        Allow *.jpeg, *.jpg, *.png, *.gif
                       </Typography>
                     }
                     multiple
@@ -251,7 +250,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                   sx={{ minWidth: "100px" }}
                   loading={isSubmitting || isLoading}
                 >
-                  Tải lên
+                  Upload
                 </LoadingButton>
                 <LoadingButton
                   type="submit"
@@ -259,7 +258,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                   sx={{ minWidth: "100px", marginLeft: 2 }}
                   onClick={() => handleClickCancel()}
                 >
-                  Hủy
+                  Cancel
                 </LoadingButton>
               </Grid>
             </Stack>

@@ -88,7 +88,7 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = null;
 
-      const { stories, count } = action.payload;
+      const { stories, count, totalPages } = action.payload;
 
       // story.forEach((story) => {
       //   state.storiesById[story._id] = story;
@@ -97,6 +97,7 @@ const slice = createSlice({
       // }) ;  todo
       state.AllStories = stories;
       state.totalStories = count; // toask: add totalStories?
+      state.totalPages = totalPages; // toask: add totalStories?
     },
     getAllStoriesWithSortSuccess(state, action) {
       state.isLoading = false;
@@ -267,16 +268,11 @@ export const deleteStory =
   async (dispatch) => {
     // dispatch(slice.actions.startLoading());
     try {
-      let text = "Do you want to delete it?";
-      if (window.confirm(text) === true) {
-        await apiService2.delete(`/stories/${storyId}`);
-        // dispatch(
-        //   slice.actions.removeStorySuccess({ ...response.data.data, storyId })
-        // );
-        toast.success("Delete Story successfully");
-      } else {
-        dispatch(slice.actions.removeStoryNotSuccess());
-      }
+      await apiService2.delete(`/stories/${storyId}`);
+      // dispatch(
+      //   slice.actions.removeStorySuccess({ ...response.data.data, storyId })
+      // );
+      toast.success("Delete Story successfully");
 
       // dispatch(getStoriesOfUser({ userId, page, limit }));
     } catch (error) {

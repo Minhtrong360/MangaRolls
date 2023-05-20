@@ -201,7 +201,7 @@ export const createComment =
       }
     } catch (error) {
       dispatch(slice.actions.hasError(error));
-      toast.error(error);
+      // toast.error(error);
     }
   };
 
@@ -211,24 +211,14 @@ export const deleteComment =
     dispatch(slice.actions.startLoading());
     try {
       if (storyId) {
-        let text = "Do you want to delete it?";
-        if (window.confirm(text) === true) {
-          await apiService2.delete(`/comments/${commentId}`);
-          dispatch(slice.actions.removeCommentSuccess({ commentId, storyId }));
-          toast.success("Delete comment successfully");
-        }
+        await apiService2.delete(`/comments/${commentId}`);
+        dispatch(slice.actions.removeCommentSuccess({ commentId, storyId }));
+        toast.success("Delete comment successfully");
       }
       if (chapterId) {
-        let text = "Do you want to delete it?";
-        if (window.confirm(text) === true) {
-          await apiService2.delete(`/comments/${commentId}`);
-          dispatch(
-            slice.actions.removeCommentSuccess({ commentId, chapterId })
-          );
-          toast.success("Delete comment successfully");
-        }
-      } else {
-        dispatch(slice.actions.removeCommentNotSuccess());
+        await apiService2.delete(`/comments/${commentId}`);
+        dispatch(slice.actions.removeCommentSuccess({ commentId, chapterId }));
+        toast.success("Delete comment successfully");
       }
     } catch (error) {
       dispatch(slice.actions.hasError(error));

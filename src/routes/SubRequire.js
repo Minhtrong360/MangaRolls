@@ -10,6 +10,7 @@ function SubRequire({ children }) {
   let from = location.state?.from?.pathname || "/";
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
+  console.log("user", user);
 
   const handleClickOk = () => {
     console.log("handleClickOk");
@@ -20,7 +21,7 @@ function SubRequire({ children }) {
     navigate(from, { replace: true });
   };
 
-  if (!user?.subscription?.isSubscription || !user?.admin) {
+  if (!user?.subscription?.isSubscription && !user?.admin) {
     return (
       <div>
         <Modal
@@ -49,11 +50,10 @@ function SubRequire({ children }) {
             }}
           >
             <h2 id="parent-modal-title" style={{ marginBottom: "1rem" }}>
-              THÔNG BÁO
+              ANNOUNCE
             </h2>
             <p id="parent-modal-description">
-              {`BẠN ƠI, MÌNH CẦN PHẢI ĐĂNG KÝ ĐỂ TẠO TRUYỆN ẤY.
-              BẠN ĐĂNG KÝ GIÚP MÌNH NHA!?!`}
+              {`HEY GUY, YOU NEED TO REGISTER TO CREATE NEW STORY. REGISTER NOW?!?!`}
             </p>
             <div
               style={{
@@ -62,8 +62,8 @@ function SubRequire({ children }) {
                 justifyContent: "flex-end",
               }}
             >
-              <Button onClick={handleClickOk}>Ok liền</Button>
-              <Button onClick={handleClickHong}>Hong</Button>
+              <Button onClick={handleClickOk}>OK</Button>
+              <Button onClick={handleClickHong}>NO</Button>
             </div>
           </Box>
         </Modal>

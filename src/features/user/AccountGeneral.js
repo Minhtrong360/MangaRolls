@@ -100,8 +100,8 @@ function AccountGeneral() {
                       color: "text.secondary",
                     }}
                   >
-                    Cho phép *.jpeg, *.jpg, *.png, *.gif
-                    <br /> kích thước tối đa {fData(3145728)}
+                    Allow *.jpeg, *.jpg, *.png, *.gif
+                    <br /> Max size {fData(3145728)}
                   </Typography>
                 }
               />
@@ -121,48 +121,53 @@ function AccountGeneral() {
                   },
                 }}
               >
-                <FTextField name="name" label="Tên" />
+                <FTextField name="name" label="Name" />
                 <FTextField name="email" label="Email" disabled />
                 <Controller
                   name="gender"
                   control={control}
                   render={({ field, fieldState: { error } }) => (
-                    <FSelect {...field} label="Giới tính">
-                      <option value="Male">Nam</option>
-                      <option value="Female">Nữ</option>
-                      <option value="Undefined">Không xác định</option>
+                    <FSelect {...field} label="Gender">
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Undefined">Undefined</option>
                     </FSelect>
                   )}
                 />
                 <FTextField
                   name="birthday"
-                  label="Ngày sinh"
+                  label="Birthday"
                   type="date"
                   placeholder=""
                 />
 
                 <FTextField
                   name="expired"
-                  label="Ngày hết hạn đăng ký"
+                  label="Expired day"
                   placeholder=""
                   disabled
                 />
 
-                <FTextField name="address" label="Địa chỉ" />
-                <FTextField name="city" label="Thành phố / Tỉnh" />
-                <FTextField name="country" label="Đất nước" />
-                <FTextField name="phoneNumber" label="Số điện thoại" />
+                <FTextField name="address" label="Address" />
+                <FTextField name="city" label="City/Province" />
+                <FTextField name="country" label="Country" />
+                <FTextField name="phoneNumber" label="Phone number" />
               </Box>
 
               <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-                <FTextField name="aboutMe" multiline rows={4} label="Mô tả" />
+                <FTextField
+                  name="aboutMe"
+                  multiline
+                  rows={4}
+                  label="About you"
+                />
 
                 <LoadingButton
                   type="submit"
                   variant="contained"
                   loading={isSubmitting || isLoading}
                 >
-                  Lưu thay đổi
+                  Save
                 </LoadingButton>
               </Stack>
             </Card>
