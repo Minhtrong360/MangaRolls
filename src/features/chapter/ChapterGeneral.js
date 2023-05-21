@@ -54,7 +54,7 @@ function ChapterGeneral({ chapter, loading, error }) {
                                 width: 150,
                                 height: 150,
                               }}
-                              src={chapter?.avatar}
+                              src={chapter?.avatar[0]}
                               alt="chapter"
                             />
                             <Box>
