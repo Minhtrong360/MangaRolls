@@ -14,9 +14,11 @@ import {
   Divider,
   Breadcrumbs,
   Link as MuiLink,
+  IconButton,
 } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import apiService2 from "../app/apiService2";
 import LoadingScreen from "../components/LoadingScreen";
 import { Alert } from "@mui/material";
@@ -33,6 +35,7 @@ import {
   getSingleStory,
   updateReactionStory,
 } from "../features/story/storySlice";
+import { updateLovedStory } from "../features/user/userSlice";
 import useAuth from "../hooks/useAuth";
 
 import ChapterGeneral from "../features/chapter/ChapterGeneral";
@@ -101,6 +104,19 @@ function DetailPage() {
       );
     }
   };
+
+  const handleLoveStory = () => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      console.log("user");
+      dispatch(updateLovedStory({ userId: user?._id, lovedStory: story?._id }));
+    }
+  };
+
+  const lovedStory = user?.lovedStory?.find(
+    (storyLoved) => storyLoved === story?._id
+  );
 
   useEffect(() => {
     if (params.id) {
@@ -219,163 +235,183 @@ function DetailPage() {
             ) : (
               <>
                 {story && (
-                  <Card
-                    sx={{
-                      p: 1,
-                      backgroundImage: `url(${story?.cover})`,
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                    }}
-                  >
-                    <Box backgroundColor="rgb(0,0,0,0.9)" padding={5}>
-                      <Grid container justifyContent={"space-between"}>
-                        <Grid item sm={8} md={7}>
-                          <Stack alignItems={"end"} spacing={3}>
-                            <Avatar
-                              sx={{ width: 80, height: 80 }}
-                              src={story?.cover}
-                              alt={story?.title}
-                            />
-                            <Typography
-                              color="text.primary"
-                              variant="h4"
-                              fontWeight="bold"
-                              textAlign="right"
-                            >
-                              {story?.title?.toUpperCase()}
-                            </Typography>
-                            <Typography
-                              color="text.secondary"
-                              variant="caption"
-                              textAlign="right"
-                            >
-                              {story?.summarize}
-                            </Typography>
-                          </Stack>
-                        </Grid>
-                        <Grid item ms={1}>
-                          <Divider orientation="vertical" />
-                        </Grid>
-                        <Grid item sm={8} md={4}>
-                          <Stack justifyContent="flex-end" height="100%">
-                            <Typography
-                              color="text.primary"
-                              p={1}
-                              sx={{
-                                overflow: "auto",
-                                textAlign: "justify",
-                                textDecoration: "none",
-                              }}
-                            >
-                              Author:
-                              <br />
-                              {story?.authorName !== "Updating..." ? (
-                                <StyledLink to={`/author/${story?.authorName}`}>
-                                  {story?.authorName}
-                                </StyledLink>
-                              ) : (
-                                story?.authorName
-                              )}
-                            </Typography>
-                            <Typography
-                              color="text.primary"
-                              p={1}
-                              sx={{
-                                overflow: "auto",
-                                textAlign: "justify",
-                              }}
-                            >
-                              Artist:
-                              <br />
-                              {story?.artist !== "Updating..." ? (
-                                <StyledLink to={`/artist/${story?.artist}`}>
-                                  {story?.artist}
-                                </StyledLink>
-                              ) : (
-                                story?.artist
-                              )}
-                            </Typography>
-                            <Typography
-                              variant="h7"
-                              paragraph
-                              p={1}
-                              sx={{
-                                overflow: "auto",
-                                textAlign: "justify",
-                                margin: 0,
-                              }}
-                            >
-                              Categories:
-                              <br />
-                              {story?.genres?.map((genre) => (
-                                <Chip
-                                  key={genre}
-                                  label={genre}
-                                  component={Link}
-                                  to={`/stories/:${genre}`}
-                                  sx={{
-                                    cursor: "pointer",
-                                    "&:hover": {
-                                      color: "orange", // add color property to change text color on hover
-                                    },
-                                  }}
-                                />
-                              ))}
-                            </Typography>
-                            <Typography
-                              color="text.primary"
-                              p={1}
-                              sx={{
-                                overflow: "auto",
-                                textAlign: "justify",
-                              }}
-                            >
-                              Recommended age:
-                              <br />
-                              {story?.minimumAge}
-                            </Typography>
+                  <>
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        top: 10,
+                        right: 10,
+                        zIndex: 1,
+                        // backgroundColor: "white",
+                        borderRadius: "50%",
+                      }}
+                      onClick={handleLoveStory}
+                    >
+                      {!lovedStory && (
+                        <FavoriteBorderIcon sx={{ fontSize: "40px" }} />
+                      )}
+                      {lovedStory && <FavoriteIcon sx={{ fontSize: "40px" }} />}
+                    </IconButton>
+                    <Card
+                      sx={{
+                        p: 1,
+                        backgroundImage: `url(${story?.cover})`,
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                      }}
+                    >
+                      <Box backgroundColor="rgb(0,0,0,0.9)" padding={5}>
+                        <Grid container justifyContent={"space-between"}>
+                          <Grid item sm={8} md={7}>
+                            <Stack alignItems={"end"} spacing={3}>
+                              <Avatar
+                                sx={{ width: 80, height: 80 }}
+                                src={story?.cover}
+                                alt={story?.title}
+                              />
+                              <Typography
+                                color="text.primary"
+                                variant="h4"
+                                fontWeight="bold"
+                                textAlign="right"
+                              >
+                                {story?.title?.toUpperCase()}
+                              </Typography>
+                              <Typography
+                                color="text.secondary"
+                                variant="caption"
+                                textAlign="right"
+                              >
+                                {story?.summarize}
+                              </Typography>
+                            </Stack>
+                          </Grid>
+                          <Grid item ms={1}>
+                            <Divider orientation="vertical" />
+                          </Grid>
+                          <Grid item sm={8} md={4}>
+                            <Stack justifyContent="flex-end" height="100%">
+                              <Typography
+                                color="text.primary"
+                                p={1}
+                                sx={{
+                                  overflow: "auto",
+                                  textAlign: "justify",
+                                  textDecoration: "none",
+                                }}
+                              >
+                                Author:
+                                <br />
+                                {story?.authorName !== "Updating..." ? (
+                                  <StyledLink
+                                    to={`/author/${story?.authorName}`}
+                                  >
+                                    {story?.authorName}
+                                  </StyledLink>
+                                ) : (
+                                  story?.authorName
+                                )}
+                              </Typography>
+                              <Typography
+                                color="text.primary"
+                                p={1}
+                                sx={{
+                                  overflow: "auto",
+                                  textAlign: "justify",
+                                }}
+                              >
+                                Artist:
+                                <br />
+                                {story?.artist !== "Updating..." ? (
+                                  <StyledLink to={`/artist/${story?.artist}`}>
+                                    {story?.artist}
+                                  </StyledLink>
+                                ) : (
+                                  story?.artist
+                                )}
+                              </Typography>
+                              <Typography
+                                variant="h7"
+                                paragraph
+                                p={1}
+                                sx={{
+                                  overflow: "auto",
+                                  textAlign: "justify",
+                                  margin: 0,
+                                }}
+                              >
+                                Categories:
+                                <br />
+                                {story?.genres?.map((genre) => (
+                                  <Chip
+                                    key={genre}
+                                    label={genre}
+                                    component={Link}
+                                    to={`/stories/:${genre}`}
+                                    sx={{
+                                      cursor: "pointer",
+                                      "&:hover": {
+                                        color: "orange", // add color property to change text color on hover
+                                      },
+                                    }}
+                                  />
+                                ))}
+                              </Typography>
+                              <Typography
+                                color="text.primary"
+                                p={1}
+                                sx={{
+                                  overflow: "auto",
+                                  textAlign: "justify",
+                                }}
+                              >
+                                Recommended age:
+                                <br />
+                                {story?.minimumAge}
+                              </Typography>
 
-                            <Box
-                              color="text.primary"
-                              p={1}
-                              sx={{
-                                overflow: "auto",
-                                textAlign: "justify",
-                                display: "flex",
-                              }}
-                            >
-                              <VisibilityIcon />
-                              <Box sx={{ marginLeft: 1 }}>{story?.view}</Box>
-                              <Button
+                              <Box
+                                color="text.primary"
+                                p={1}
                                 sx={{
-                                  p: 0,
-                                  color: "white",
-                                  marginLeft: 2,
-                                  borderRadius: "50%",
+                                  overflow: "auto",
+                                  textAlign: "justify",
+                                  display: "flex",
                                 }}
-                                onClick={(e) => handleClickLike(e)}
                               >
-                                <ThumbUpOffAltIcon />
-                              </Button>
-                              <Box>{story?.reactions?.like}</Box>
-                              <Button
-                                sx={{
-                                  p: 0,
-                                  color: "white",
-                                  marginLeft: 2,
-                                  borderRadius: "50%",
-                                }}
-                                onClick={(e) => handleClickDisLike(e)}
-                              >
-                                <ThumbDownOffAltIcon />
-                              </Button>
-                              <Box>{story?.reactions?.disLike}</Box>
-                            </Box>
-                          </Stack>
+                                <VisibilityIcon />
+                                <Box sx={{ marginLeft: 1 }}>{story?.view}</Box>
+                                <Button
+                                  sx={{
+                                    p: 0,
+                                    color: "white",
+                                    marginLeft: 2,
+                                    borderRadius: "50%",
+                                  }}
+                                  onClick={(e) => handleClickLike(e)}
+                                >
+                                  <ThumbUpOffAltIcon />
+                                </Button>
+                                <Box>{story?.reactions?.like}</Box>
+                                <Button
+                                  sx={{
+                                    p: 0,
+                                    color: "white",
+                                    marginLeft: 2,
+                                    borderRadius: "50%",
+                                  }}
+                                  onClick={(e) => handleClickDisLike(e)}
+                                >
+                                  <ThumbDownOffAltIcon />
+                                </Button>
+                                <Box>{story?.reactions?.disLike}</Box>
+                              </Box>
+                            </Stack>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    </Box>
-                  </Card>
+                      </Box>
+                    </Card>
+                  </>
                 )}
 
                 <Box
