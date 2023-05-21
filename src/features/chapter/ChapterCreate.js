@@ -21,8 +21,9 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
   const { isLoading, error } = useSelector((state) => state.chapter);
   const { story } = useSelector((state) => state.story);
   const params = useParams();
-  const [avatar, setAvatar] = useState([]);
-  const [content, setContent] = useState([]);
+  const [avatar, setAvatar] = useState([chapter?.avatar[0]]);
+  const [content, setContent] = useState(chapter?.content);
+  const [cancel, setCancel] = useState(false);
 
   let storyId = story?._id ? story?._id : params.id;
 
@@ -68,41 +69,55 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
           preview: URL.createObjectURL(file),
         })
       );
-      setValue("content", [
-        ...(methods.getValues().content || []),
-        ...contentFiles,
-      ]);
-
+      if (!isEditing) {
+        setValue("content", [
+          ...(methods.getValues().content || []),
+          ...contentFiles,
+        ]);
+      }
+      if (isEditing) {
+        setValue("content", [...contentFiles]);
+      }
       setContent(methods.getValues().content);
     },
 
     [setValue, methods]
   );
+  const handleClickCancel = async () => {
+    reset();
+    setAvatar([]);
+    setContent([]);
+    setCancel(true);
+    setIsEditing(false);
+  };
 
   const onSubmit = (data) => {
     if (!isEditing) {
-      dispatch(createChapter([{ storyId }, { ...data }]));
+      if (!cancel) {
+        dispatch(createChapter([{ storyId }, { ...data }]));
+      }
       reset(defaultValues);
       setAvatar([]);
       setContent([]);
     }
     if (isEditing) {
       try {
-        dispatch(updateChapter({ chapterId: chapter._id }, { data }));
+        if (!cancel) {
+          dispatch(updateChapter({ chapterId: chapter._id }, { data }));
+        }
       } catch (error) {
         toast(error);
       }
-      if (!error) {
-        setIsEditing(false); //toask: muốn sau khi update thành công thì mới setIsEditing = false và tải lại Chapters
+      if (!error && !cancel) {
+        setIsEditing(false);
+        // toask: muốn sau khi update thành công thì mới setIsEditing = false và tải lại Chapters
       }
     }
   };
+  console.log("avatar", avatar);
+  console.log("content", content);
+  console.log("isEditing", isEditing);
 
-  const handleClickCancel = async () => {
-    reset();
-    setAvatar([]);
-    setContent([]);
-  };
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid
@@ -171,35 +186,33 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
 
                   {avatar.length > 0 && (
                     <img
-                      src={avatar[0].preview}
-                      alt="preview"
+                      src={avatar[0]?.preview ? avatar[0]?.preview : avatar}
+                      alt=""
                       style={{ maxWidth: "100%", maxHeight: "100%" }}
                     />
                   )}
 
-                  {avatar.length === 0 && (
-                    <FUploadImage
-                      name="avatar"
-                      accept="image/*"
-                      maxSize={3145728}
-                      onDrop={handleDropAvatar}
-                      helperText={
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            mt: 2,
-                            mx: "auto",
-                            display: "block",
-                            textAlign: "center",
-                            color: "text.secondary",
-                          }}
-                        >
-                          Allow *.jpeg, *.jpg, *.png, *.gif
-                          <br /> Max size {fData(3145728)}
-                        </Typography>
-                      }
-                    />
-                  )}
+                  <FUploadImage
+                    name="avatar"
+                    accept="image/*"
+                    maxSize={3145728}
+                    onDrop={handleDropAvatar}
+                    helperText={
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          mt: 2,
+                          mx: "auto",
+                          display: "block",
+                          textAlign: "center",
+                          color: "text.secondary",
+                        }}
+                      >
+                        Allow *.jpeg, *.jpg, *.png, *.gif
+                        <br /> Max size {fData(3145728)}
+                      </Typography>
+                    }
+                  />
                 </Card>
                 <Card sx={{ py: 1, px: 1, textAlign: "center" }}>
                   <Typography
@@ -207,11 +220,11 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                   >
                     Chapter content
                   </Typography>
-                  {content.map((file) => (
+                  {content?.map((file) => (
                     <img
-                      key={file.preview}
-                      src={file.preview}
-                      alt="preview"
+                      key={file?.preview}
+                      src={file?.preview ? file?.preview : file}
+                      alt=""
                       style={{
                         maxWidth: "100%",
                         maxHeight: "100%",

@@ -80,10 +80,7 @@ function UploadSingleFile({ error = false, file, helperText, sx, ...other }) {
               "& img": { objectFit: "cover", width: 1, height: 1 },
             }}
           >
-            <img
-              alt="file preview"
-              src={isString(file) ? file : file.preview}
-            />
+            <img src={isString(file) ? file : file.preview} />
           </Box>
         )}
       </DropZoneStyle>
