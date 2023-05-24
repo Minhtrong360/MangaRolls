@@ -215,25 +215,26 @@ function StoryCreate({ isCreating, setIsCreating }) {
                     Create
                   </LoadingButton>
                 ) : (
-                  <LoadingButton
-                    type="submit"
-                    variant="contained"
-                    loading={isSubmitting || isLoading}
-                    disabled
-                  >
-                    Create
-                  </LoadingButton>
+                  <>
+                    <LoadingButton
+                      type="submit"
+                      variant="contained"
+                      loading={isSubmitting || isLoading}
+                      disabled
+                    >
+                      Create
+                    </LoadingButton>
+                    <LoadingButton
+                      type="submit"
+                      variant="contained"
+                      loading={isSubmitting || isLoading}
+                      onClick={(e) => handleCreateOther(e)}
+                      sx={{ ml: 2 }}
+                    >
+                      Create other
+                    </LoadingButton>
+                  </>
                 )}
-
-                <LoadingButton
-                  type="submit"
-                  variant="contained"
-                  loading={isSubmitting || isLoading}
-                  onClick={(e) => handleCreateOther(e)}
-                  sx={{ ml: 2 }}
-                >
-                  Create other
-                </LoadingButton>
               </Box>
             </Card>
           </Grid>

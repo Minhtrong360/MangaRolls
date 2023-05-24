@@ -114,9 +114,6 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
       }
     }
   };
-  console.log("avatar", avatar);
-  console.log("content", content);
-  console.log("isEditing", isEditing);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -138,6 +135,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                 alignItems: "center",
                 alignContent: "center",
                 textAlign: "center",
+                fontSize: { xs: "1em", md: "1.5em" },
               }}
             >
               {story?.title.toUpperCase()}
@@ -153,6 +151,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                 alignItems: "center",
                 alignContent: "center",
                 textAlign: "center",
+                fontSize: { xs: "1em", md: "1.5em" },
               }}
             >
               New chapter
@@ -169,7 +168,9 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                   width: "50%",
                 }}
               >
-                <Typography sx={{ mb: 2, fontSize: "26px" }}>
+                <Typography
+                  sx={{ mb: 2, fontSize: { xs: "1em", md: "1.5em" } }}
+                >
                   {" "}
                   Chapter title{" "}
                 </Typography>
@@ -179,7 +180,12 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
               <Grid item xs={12} md={4}>
                 <Card sx={{ py: 1, px: 1, textAlign: "center" }}>
                   <Typography
-                    sx={{ py: 2, px: 2, textAlign: "center", fontSize: "26px" }}
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      textAlign: "center",
+                      fontSize: { xs: "1em", md: "1.5em" },
+                    }}
                   >
                     Cover
                   </Typography>
@@ -216,7 +222,12 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                 </Card>
                 <Card sx={{ py: 1, px: 1, textAlign: "center" }}>
                   <Typography
-                    sx={{ py: 2, px: 2, textAlign: "center", fontSize: "26px" }}
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      textAlign: "center",
+                      fontSize: { xs: "1em", md: "1.5em" },
+                    }}
                   >
                     Chapter content
                   </Typography>

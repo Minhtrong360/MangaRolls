@@ -8,12 +8,14 @@ function ChapterGeneral({ chapter, loading, error }) {
   const navigate = useNavigate();
 
   return (
-    <Container sx={{ my: 3, display: "flex", justifyContent: "center" }}>
+    <Container sx={{ my: 3 }}>
       <Box
         sx={{
           position: "relative",
           height: 1,
-          width: "50vw",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         {loading ? (
@@ -24,8 +26,8 @@ function ChapterGeneral({ chapter, loading, error }) {
               <Alert severity="error">{error}</Alert>
             ) : (
               <>
-                {chapter && (
-                  <Card>
+                {chapter ? (
+                  <Card sx={{ width: { md: "80%" } }}>
                     <Grid container>
                       <Grid
                         item
@@ -51,10 +53,11 @@ function ChapterGeneral({ chapter, loading, error }) {
                             <Box
                               component="img"
                               sx={{
-                                width: 150,
-                                height: 150,
+                                width: "100%",
+                                maxWidth: 150,
+                                height: "auto",
                               }}
-                              src={chapter?.avatar[0]}
+                              src={chapter.avatar[0]}
                               alt="chapter"
                             />
                             <Box>
@@ -79,7 +82,7 @@ function ChapterGeneral({ chapter, loading, error }) {
                                   textAlign: "justify",
                                 }}
                               >
-                                {chapter?.createdAt?.slice(0, 10)}
+                                {chapter.createdAt.slice(0, 10)}
                               </Typography>
                               <Button
                                 onClick={() =>
@@ -94,8 +97,7 @@ function ChapterGeneral({ chapter, loading, error }) {
                       </Grid>
                     </Grid>
                   </Card>
-                )}
-                {!chapter && (
+                ) : (
                   <Typography variant="h6">404 Chapter not found</Typography>
                 )}
               </>
