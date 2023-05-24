@@ -178,7 +178,7 @@ function DetailPage() {
                     p={1}
                     sx={{ overflow: "auto", textAlign: "center" }}
                   >
-                    List of chapters
+                    LIST OF CHAPTERS
                   </Typography>
                 </Box>
               )}

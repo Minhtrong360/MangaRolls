@@ -8,104 +8,105 @@ function ChapterGeneral({ chapter, loading, error }) {
   const navigate = useNavigate();
 
   return (
-    <Container sx={{ my: 3 }}>
-      <Box
-        sx={{
-          position: "relative",
-          height: 1,
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        {loading ? (
-          <LoadingScreen />
-        ) : (
-          <>
-            {error ? (
-              <Alert severity="error">{error}</Alert>
-            ) : (
-              <>
-                {chapter ? (
-                  <Card sx={{ width: { md: "80%" } }}>
-                    <Grid container>
-                      <Grid
-                        item
-                        xs={12}
-                        md={6}
-                        lg={12}
-                        sx={{
-                          borderRadius: 2,
-                          overflow: "hidden",
-                          display: "flex",
-                          flexDirection: "row",
-                        }}
-                      >
-                        <Box p={2}>
-                          <Box
-                            sx={{
-                              borderRadius: 2,
-                              overflow: "hidden",
-                              display: "flex",
-                              flexDirection: "row",
-                            }}
-                          >
+    <>
+      <Container sx={{ my: 3 }}>
+        <Box
+          sx={{
+            position: "relative",
+            height: 1,
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          {loading ? (
+            <LoadingScreen />
+          ) : (
+            <>
+              {error ? (
+                <Alert severity="error">{error}</Alert>
+              ) : (
+                <>
+                  {chapter ? (
+                    <Card sx={{ width: { md: "80%" } }}>
+                      <Grid container>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          lg={12}
+                          sx={{
+                            borderRadius: 2,
+                            overflow: "hidden",
+                            display: "flex",
+                            flexDirection: "row",
+                          }}
+                        >
+                          <Box p={2}>
                             <Box
-                              component="img"
                               sx={{
-                                width: "100%",
-                                maxWidth: 150,
-                                height: "auto",
+                                borderRadius: 2,
+                                overflow: "hidden",
+                                display: "flex",
+                                flexDirection: "row",
                               }}
-                              src={chapter.avatar[0]}
-                              alt="chapter"
-                            />
-                            <Box>
-                              <Typography
-                                color="text.primary"
-                                p={2}
+                            >
+                              <Box
+                                component="img"
                                 sx={{
-                                  overflow: "auto",
-                                  textAlign: "justify",
-                                  display: "flex",
-                                  flexDirection: "column",
+                                  width: 150,
+                                  height: { xs: "auto", md: 150 },
                                 }}
-                              >
-                                {chapter.title}
-                              </Typography>
-                              <Typography
-                                color="text.primary"
-                                fontSize="14px"
-                                p={2}
-                                sx={{
-                                  overflow: "auto",
-                                  textAlign: "justify",
-                                }}
-                              >
-                                {chapter.createdAt.slice(0, 10)}
-                              </Typography>
-                              <Button
-                                onClick={() =>
-                                  navigate(`/chapter/${chapter._id}`)
-                                }
-                              >
-                                Read
-                              </Button>
+                                src={chapter.avatar[0]}
+                                alt="chapter"
+                              />
+                              <Box>
+                                <Typography
+                                  color="text.primary"
+                                  p={2}
+                                  sx={{
+                                    overflow: "auto",
+                                    textAlign: "justify",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                  }}
+                                >
+                                  {chapter.title}
+                                </Typography>
+                                <Typography
+                                  color="text.primary"
+                                  fontSize="14px"
+                                  p={2}
+                                  sx={{
+                                    overflow: "auto",
+                                    textAlign: "justify",
+                                  }}
+                                >
+                                  {chapter.createdAt.slice(0, 10)}
+                                </Typography>
+                                <Button
+                                  onClick={() =>
+                                    navigate(`/chapter/${chapter._id}`)
+                                  }
+                                >
+                                  Read
+                                </Button>
+                              </Box>
                             </Box>
                           </Box>
-                        </Box>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </Card>
-                ) : (
-                  <Typography variant="h6">404 Chapter not found</Typography>
-                )}
-              </>
-            )}
-          </>
-        )}
-      </Box>
-    </Container>
+                    </Card>
+                  ) : (
+                    <Typography variant="h6">404 Chapter not found</Typography>
+                  )}
+                </>
+              )}
+            </>
+          )}
+        </Box>
+      </Container>
+    </>
   );
 }
 
