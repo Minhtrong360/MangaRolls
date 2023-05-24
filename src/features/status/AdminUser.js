@@ -48,7 +48,7 @@ function AdminUser() {
   };
 
   return (
-    <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
+    <Box sx={{ position: "relative" }}>
       {isLoading ? (
         <LoadingScreen />
       ) : (
@@ -62,7 +62,9 @@ function AdminUser() {
         >
           {users?.users?.length > 0 && (
             <>
-              <Typography sx={{ fontSize: 20, fontWeight: 600 }}>
+              <Typography
+                sx={{ fontSize: 20, fontWeight: 600, paddingTop: { xs: 3 } }}
+              >
                 LIST OF USERS
               </Typography>
               <TableContainer>
@@ -71,7 +73,7 @@ function AdminUser() {
                     <TableRow>
                       <TableCell>Name</TableCell>
                       <TableCell>Email</TableCell>
-                      <TableCell>Subscription</TableCell>
+                      <TableCell>Uploaded Stories</TableCell>
                       <TableCell>Registered on</TableCell>
                       <TableCell></TableCell>
                     </TableRow>
@@ -81,11 +83,7 @@ function AdminUser() {
                       <TableRow key={user.id}>
                         <TableCell>{user.name}</TableCell>
                         <TableCell>{user.email}</TableCell>
-                        <TableCell>
-                          {user?.subscription?.isSubscription
-                            ? "true"
-                            : "false"}
-                        </TableCell>
+                        <TableCell>{user.storyCount}</TableCell>
                         <TableCell>
                           {formatDate(user.createdAt)} (
                           {formatDaysAgo(user.createdAt)})

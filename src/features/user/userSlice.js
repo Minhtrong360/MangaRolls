@@ -128,7 +128,6 @@ export const getAllUsers =
       const response = await apiService2.get(
         `/users?page=${page}&limit=${limit}`
       );
-
       dispatch(slice.actions.getAllUsersSucces(response.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

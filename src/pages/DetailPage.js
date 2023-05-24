@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Card,
   Grid,
@@ -39,6 +39,8 @@ import { updateLovedStory } from "../features/user/userSlice";
 import useAuth from "../hooks/useAuth";
 
 import ChapterGeneral from "../features/chapter/ChapterGeneral";
+import ThemeProvider from "../contexts/ThemeProvider";
+import ThemeContext from "../contexts/ThemeContext";
 
 const TabsWrapperStyle = styled("div")(({ theme }) => ({
   zIndex: 9,
@@ -74,6 +76,9 @@ function DetailPage() {
   const { story, isLoading } = useSelector((state) => state.story);
 
   const { user } = useAuth();
+  const { mode } = useContext(ThemeContext);
+
+  console.log("ThemeProvider", mode);
 
   useEffect(() => {
     if (params.id) {
@@ -212,7 +217,6 @@ function DetailPage() {
   };
 
   return (
-    // <Container sx={{ my: 3, overflowAnchor: "none" }}>
     <Container maxWidth="lg" sx={{ py: 5 }}>
       <Breadcrumbs
         aria-label="breadcrumb"
@@ -239,8 +243,8 @@ function DetailPage() {
                     <IconButton
                       sx={{
                         position: "absolute",
-                        top: 10,
-                        right: 10,
+                        top: 1,
+                        right: 1,
                         zIndex: 1,
                         // backgroundColor: "white",
                         borderRadius: "50%",
@@ -260,7 +264,14 @@ function DetailPage() {
                         backgroundRepeat: "no-repeat",
                       }}
                     >
-                      <Box backgroundColor="rgb(0,0,0,0.9)" padding={5}>
+                      <Box
+                        backgroundColor={
+                          mode === "dark"
+                            ? "rgb(0,0,0,0.9)"
+                            : "rgb(245, 246, 250, 0.9)"
+                        }
+                        padding={5}
+                      >
                         <Grid container justifyContent={"space-between"}>
                           <Grid item sm={8} md={7}>
                             <Stack alignItems={"end"} spacing={3}>
@@ -383,8 +394,8 @@ function DetailPage() {
                                 <Box sx={{ marginLeft: 1 }}>{story?.view}</Box>
                                 <Button
                                   sx={{
+                                    color: "text.primary",
                                     p: 0,
-                                    color: "white",
                                     marginLeft: 2,
                                     borderRadius: "50%",
                                   }}
@@ -395,8 +406,8 @@ function DetailPage() {
                                 <Box>{story?.reactions?.like}</Box>
                                 <Button
                                   sx={{
+                                    color: "text.primary",
                                     p: 0,
-                                    color: "white",
                                     marginLeft: 2,
                                     borderRadius: "50%",
                                   }}

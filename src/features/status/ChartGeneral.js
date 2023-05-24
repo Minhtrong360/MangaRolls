@@ -7,7 +7,7 @@ import useAuth from "../../hooks/useAuth";
 import LoadingScreen from "../../components/LoadingScreen";
 import AdminUser from "./AdminUser";
 
-function AdminPage() {
+function ChartGeneral() {
   const [chartData, setChartData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [timeRange, setTimeRange] = useState("7days");
@@ -25,6 +25,7 @@ function AdminPage() {
               timeRange === "7days"
                 ? moment().subtract(7, "days")
                 : moment().subtract(1, "month");
+
             return moment(item.date).isBetween(
               rangeStart,
               rangeEnd,
@@ -65,7 +66,6 @@ function AdminPage() {
         };
         setIsLoading(false);
         setChartData(chartData);
-        console.log("data", data);
       }
     };
 
@@ -100,7 +100,11 @@ function AdminPage() {
         ADMIN DASHBOARD
       </Typography>
       <Box
-        sx={{ display: "flex", flexDirection: "row", alignItems: "flex-start" }}
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: { xs: "center", md: "flex-start" },
+        }}
       >
         <Box sx={{ flex: 1, alignSelf: "flex-start" }}>
           <Box
@@ -114,13 +118,20 @@ function AdminPage() {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                width: "30vw",
+                width: { xs: "90vw", md: "30vw" },
                 height: "30vh",
                 maxWidth: "500px",
                 maxHeight: "1000px",
               }}
             >
-              <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
+              <Box
+                sx={{
+                  position: "relative",
+                  width: "100%",
+                  height: "100%",
+                  paddingRight: 2,
+                }}
+              >
                 {isLoading ? (
                   <LoadingScreen />
                 ) : (
@@ -158,10 +169,8 @@ function AdminPage() {
         </Box>
         <AdminUser />
       </Box>
-      {/* <Divider sx={{ margin: 3 }} /> */}
-      {/* <AdminStories /> */}
     </Container>
   );
 }
 
-export default AdminPage;
+export default ChartGeneral;

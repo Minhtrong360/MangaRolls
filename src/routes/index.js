@@ -11,14 +11,10 @@ import AccountPage from "../pages/AccountPage";
 import CreateStoryAndChapterPage from "../pages/CreateStoryAndChapterPage";
 import EditStoryAndChapterPage from "../pages/EditStoryAndChapterPage";
 import DetailPage from "../pages/DetailPage";
-
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
-
 import NotFoundPage from "../pages/NotFoundPage";
 import RegisterPage from "../pages/RegisterPage";
-
-import SubRequire from "./SubRequire";
 import AllHotStoriesWithPagination from "../features/story/AllHotStoriesWithPagination";
 import AllLoveStoriesWithPagination from "../features/story/AllLoveStoriesWithPagination";
 import AllSearchStories from "../features/story/AllSearchStories";
@@ -45,9 +41,9 @@ function Router() {
         <Route
           path="/story/create"
           element={
-            <SubRequire>
-              <CreateStoryAndChapterPage />
-            </SubRequire>
+            // <SubRequire>
+            <CreateStoryAndChapterPage />
+            // </SubRequire> todo
           }
         />
 

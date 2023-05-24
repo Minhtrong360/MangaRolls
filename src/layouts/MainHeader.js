@@ -100,14 +100,14 @@ function MainHeader() {
             >
               Account
             </MenuItem>
-            <MenuItem
+            {/* <MenuItem
               onClick={handleMenuClose}
               to="/subscription"
               component={Link}
               sx={{ mx: 1 }}
             >
               Register
-            </MenuItem>
+            </MenuItem> */}
 
             <MenuItem
               onClick={handleMenuClose}

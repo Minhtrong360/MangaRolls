@@ -4,6 +4,7 @@ import {
   createTheme,
   ThemeProvider as MUIThemeProvider,
 } from "@mui/material/styles";
+import ThemeContext from "./ThemeContext";
 
 const PRIMARY = {
   lighter: "#FFD07F",
@@ -49,10 +50,12 @@ function ThemeProvider({ children }) {
   const theme = createTheme(themeOptions);
 
   return (
-    <MUIThemeProvider theme={theme}>
-      <CssBaseline />
-      {children}
-    </MUIThemeProvider>
+    <ThemeContext.Provider value={{ mode }}>
+      <MUIThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </MUIThemeProvider>
+    </ThemeContext.Provider>
   );
 }
 

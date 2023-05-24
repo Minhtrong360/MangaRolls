@@ -86,12 +86,10 @@ function StoryCreate({ isCreating, setIsCreating }) {
   }, [status, error]);
 
   const onSubmit = (data) => {
-    console.log("onSubmit", data);
     dispatch(createStory(data));
     setStatus("started");
   };
   const handleCreateOther = (e) => {
-    console.log("handleCreateOther");
     e.preventDefault();
     setStatus("start");
     setSelectedGenres([]);
@@ -120,133 +118,128 @@ function StoryCreate({ isCreating, setIsCreating }) {
   };
 
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3} width="100vh">
-        <Grid item xs={12} md={4}>
-          <Card
-            sx={{ py: 10, px: 3, textAlign: "center", justifyItems: "center" }}
-          >
-            <FUploadAvatar
-              name="cover"
-              accept="image/*"
-              maxSize={3145728}
-              onDrop={handleDrop}
-              helperText={
-                <Typography
-                  variant="caption"
-                  sx={{
-                    mt: 2,
-                    mx: "auto",
-                    display: "block",
-                    textAlign: "center",
-                    color: "text.secondary",
-                    justifyItems: "center",
-                  }}
-                >
-                  Allow *.jpeg, *.jpg, *.png, *.gif
-                  <br /> Max size {fData(3145728)}
-                </Typography>
-              }
-            />
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={7}>
-          <Card sx={{ p: 3 }}>
-            <Box
-              sx={{
-                display: "grid",
-                rowGap: 3,
-                columnGap: 10,
-              }}
-            >
-              <FTextField name="title" label="Title" />
-              <FTextField name="authorName" label="Author name" />
-              <FTextField name="artist" label="Artist" />
-
-              {/* Use Autocomplete for genres */}
-              <Autocomplete
-                multiple
-                id="genres"
-                disableCloseOnSelect
-                options={allowGenres}
-                value={selectedGenres}
-                onChange={handleGenresChange}
-                getOptionLabel={(option) => option}
-                renderOption={(props, option, { selected }) => (
-                  <li {...props}>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={selected}
-                            color="primary"
-                            value={option}
-                            multiple
-                          />
-                        }
-                        label={option}
-                        multiple
-                      />
-                    </FormGroup>
-                  </li>
-                )}
-                renderInput={(params) => (
-                  <FTextField {...params} name="genres" label="Genres" />
-                )}
+    <div style={{ width: "85%", paddingLeft: 0 }}>
+      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={4}>
+            <Card sx={{ py: 10, px: 3, textAlign: "center" }}>
+              <FUploadAvatar
+                name="cover"
+                accept="image/*"
+                maxSize={3145728}
+                onDrop={handleDrop}
+                helperText={
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      mt: 2,
+                      mx: "auto",
+                      display: "block",
+                      textAlign: "center",
+                      color: "text.secondary",
+                    }}
+                  >
+                    Allow *.jpeg, *.jpg, *.png, *.gif
+                    <br /> Max size {fData(3145728)}
+                  </Typography>
+                }
               />
+            </Card>
+          </Grid>
 
-              <FTextField name="minimumAge" label="Minimum Age" />
-              <FTextField
-                name="summarize"
-                multiline
-                rows={4}
-                label="Summarize"
-              />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-                mt: 3,
-              }}
-            >
-              {isCreating && (
-                <LoadingButton
-                  type="submit"
-                  variant="contained"
-                  loading={isSubmitting || isLoading}
-                >
-                  Create
-                </LoadingButton>
-              )}
-
-              {!isCreating && (
-                <LoadingButton
-                  type="submit"
-                  variant="contained"
-                  loading={isSubmitting || isLoading}
-                  disabled
-                >
-                  Create
-                </LoadingButton>
-              )}
-
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                loading={isSubmitting || isLoading}
-                onClick={(e) => handleCreateOther(e)}
-                sx={{ ml: 2 }}
+          <Grid item xs={12} md={8}>
+            <Card sx={{ p: 3 }}>
+              <Box
+                sx={{
+                  display: "grid",
+                  rowGap: 3,
+                  columnGap: 10,
+                }}
               >
-                Create a new one
-              </LoadingButton>
-            </Box>
-          </Card>
+                <FTextField name="title" label="Title" />
+                <FTextField name="authorName" label="Author name" />
+                <FTextField name="artist" label="Artist" />
+
+                {/* Use Autocomplete for genres */}
+                <Autocomplete
+                  multiple
+                  id="genres"
+                  disableCloseOnSelect
+                  options={allowGenres}
+                  value={selectedGenres}
+                  onChange={handleGenresChange}
+                  getOptionLabel={(option) => option}
+                  renderOption={(props, option, { selected }) => (
+                    <li {...props}>
+                      <FormGroup>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={selected}
+                              color="primary"
+                              value={option}
+                            />
+                          }
+                          label={option}
+                        />
+                      </FormGroup>
+                    </li>
+                  )}
+                  renderInput={(params) => (
+                    <FTextField {...params} name="genres" label="Genres" />
+                  )}
+                />
+
+                <FTextField name="minimumAge" label="Minimum Age" />
+                <FTextField
+                  name="summarize"
+                  multiline
+                  rows={4}
+                  label="Summarize"
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "flex-end",
+                  mt: 3,
+                }}
+              >
+                {isCreating ? (
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={isSubmitting || isLoading}
+                  >
+                    Create
+                  </LoadingButton>
+                ) : (
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={isSubmitting || isLoading}
+                    disabled
+                  >
+                    Create
+                  </LoadingButton>
+                )}
+
+                <LoadingButton
+                  type="submit"
+                  variant="contained"
+                  loading={isSubmitting || isLoading}
+                  onClick={(e) => handleCreateOther(e)}
+                  sx={{ ml: 2 }}
+                >
+                  Create other
+                </LoadingButton>
+              </Box>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-    </FormProvider>
+      </FormProvider>
+    </div>
   );
 }
 

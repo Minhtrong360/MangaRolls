@@ -14,7 +14,7 @@ function AllHotStoriesWithPagination() {
   );
 
   const [page, setPage] = useState(1);
-  const noSlide = true;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,10 +45,7 @@ function AllHotStoriesWithPagination() {
                 <Alert severity="error">{error}</Alert>
               ) : (
                 <>
-                  <StoriesList
-                    stories={storiesWithPagination}
-                    noSlide={noSlide}
-                  />
+                  <StoriesList stories={storiesWithPagination} />
                   <ClickableLinkChips
                     page={page}
                     setPage={setPage}

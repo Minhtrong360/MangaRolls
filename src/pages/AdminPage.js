@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Container, Tab, Box, Tabs, Typography } from "@mui/material";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
-import ChartGeneral from "../features/status/AdminPage";
+
 import AdminStories from "../features/story/AdminStories";
+import ChartGeneral from "../features/status/ChartGeneral";
 
 function AccountPage() {
   const [currentTab, setCurrentTab] = useState("GROWTH");

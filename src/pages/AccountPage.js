@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { Container, Tab, Box, Tabs, Typography } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import ShareIcon from "@mui/icons-material/Share";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-
 import AccountGeneral from "../features/user/AccountGeneral";
-import AccountSocialLinks from "../features/user/AccountSocialLinks";
 import StoriesListOfUser from "../features/story/StoriesListOfUser";
 
 function AccountPage() {

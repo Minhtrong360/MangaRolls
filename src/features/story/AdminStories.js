@@ -18,6 +18,7 @@ import LoadingScreen from "../../components/LoadingScreen";
 import { deleteStory } from "./storySlice";
 import { Link } from "react-router-dom";
 import AdminManageGenres from "../status/AdminManageGenres";
+import { useTheme } from "@mui/material/styles";
 
 function AdminStories() {
   const [page, setPage] = useState(1);
@@ -27,7 +28,7 @@ function AdminStories() {
 
   const dispatch = useDispatch();
   const { user } = useAuth();
-
+  const theme = useTheme();
   useEffect(() => {
     dispatch(getStories({ page }));
   }, [dispatch, page]);
@@ -40,7 +41,6 @@ function AdminStories() {
     window.scrollTo(0, 0); // scroll to top
   }, [page]);
 
-  console.log("totalPages", totalPages);
   return (
     <Box sx={{ position: "relative", height: 1 }}>
       {isLoading ? (
@@ -52,6 +52,7 @@ function AdminStories() {
             flexDirection: "column",
             gap: "2rem",
             alignItems: "center",
+            width: "fit-content",
           }}
         >
           {AllStories.length > 0 ? (
@@ -62,9 +63,10 @@ function AdminStories() {
                   justifyContent: "space-between",
                   alignItems: "center",
                   width: "100%",
+                  px: { xs: 2, sm: 4 }, // Adjust the padding on different screen sizes
                 }}
               >
-                <Typography sx={{ fontSize: 20, fontWeight: 600 }}>
+                <Typography sx={{ fontSize: "1.2em", fontWeight: 600 }}>
                   LIST OF STORIES
                 </Typography>
                 <AdminManageGenres />
@@ -74,10 +76,10 @@ function AdminStories() {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell style={{ fontSize: "1.2em" }}>Cover</TableCell>
-                      <TableCell style={{ fontSize: "1.2em" }}>Title</TableCell>
-                      <TableCell style={{ fontSize: "1.2em" }}>View</TableCell>
-                      <TableCell style={{ fontSize: "1.2em" }}>
+                      <TableCell style={{ fontSize: "1.1em" }}>Cover</TableCell>
+                      <TableCell style={{ fontSize: "1.1em" }}>Title</TableCell>
+                      <TableCell style={{ fontSize: "1.1em" }}>View</TableCell>
+                      <TableCell style={{ fontSize: "1.1em" }}>
                         Date Created
                       </TableCell>
                       <TableCell></TableCell>
@@ -91,18 +93,25 @@ function AdminStories() {
                             <img
                               src={story?.cover}
                               alt="cover"
-                              width="120vw"
-                              height="120vh"
+                              width="100%" // Adjust the image width to fill the cell
+                              height="auto" // Allow the image height to adjust automatically
                             />
                           </Link>
                         </TableCell>
-                        <TableCell>{story?.title}</TableCell>
-                        <TableCell>{story?.view}</TableCell>
-                        <TableCell>
+                        <TableCell style={{ fontSize: "1em" }}>
+                          {story?.title}
+                        </TableCell>
+                        <TableCell style={{ fontSize: "1em" }}>
+                          {story?.view}
+                        </TableCell>
+                        <TableCell style={{ fontSize: "1em" }}>
                           {new Date(story?.createdAt).toLocaleDateString()}
                         </TableCell>
                         <TableCell>
-                          <Button onClick={() => handleDeleteUser(story._id)}>
+                          <Button
+                            onClick={() => handleDeleteUser(story._id)}
+                            sx={{ fontSize: "0.9em" }}
+                          >
                             Delete
                           </Button>
                         </TableCell>
@@ -111,7 +120,13 @@ function AdminStories() {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: 2, // Add some margin from the top
+                }}
+              >
                 <ClickableLinkChips
                   page={page}
                   setPage={setPage}
