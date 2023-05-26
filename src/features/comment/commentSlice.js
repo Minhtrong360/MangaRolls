@@ -192,10 +192,7 @@ export const createComment =
           targetId: chapterId,
           content,
         });
-        console.log(
-          "create comment in Chapter comment slice",
-          response.data.data
-        );
+
         dispatch(slice.actions.createCommentSuccess(response.data.data));
         dispatch(getComments({ chapterId }));
       }

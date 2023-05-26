@@ -63,7 +63,6 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
     [setValue, methods]
   );
   function isImageFile(filename) {
-    console.log("isImageFile", filename);
     const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif"];
     const ext = filename?.toLowerCase().substr(filename.lastIndexOf("."));
     return allowedExtensions.includes(ext);
@@ -102,12 +101,10 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
         );
 
         setContent(zipFiles);
-        console.log("setContent:", zipFiles);
       }
     },
     [setValue, methods]
   );
-  console.log("setContent:", content);
 
   const handleClickCancel = async () => {
     reset();
@@ -118,7 +115,6 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
   };
 
   const onSubmit = (data) => {
-    console.log("onSubmit", data);
     if (!isEditing) {
       if (!cancel) {
         dispatch(createChapter([{ storyId }, { ...data }]));

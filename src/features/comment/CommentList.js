@@ -71,7 +71,7 @@ function CommentList({ storyId, chapterId }) {
   }, []);
 
   let renderComments;
-  console.log();
+
   if (commentsByStory) {
     const comments = commentsByStory.map(
       (commentId) => commentsById[commentId]

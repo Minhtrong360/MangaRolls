@@ -19,7 +19,6 @@ function StoryWithArtist() {
   const dispatch = useDispatch();
   const params = useParams();
   const artist = params.artist;
-  console.log("artist", artist);
 
   useEffect(() => {
     if (params.artist) {

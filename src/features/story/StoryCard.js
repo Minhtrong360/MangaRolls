@@ -38,7 +38,6 @@ function StoryCard({
     setDeletingStory(title);
   };
   const handleConfirmDelete = () => {
-    console.log("story._id", story._id);
     dispatch(deleteStory({ storyId: story._id, userId }));
 
     setStoriesOfUserFake((prevStories) =>

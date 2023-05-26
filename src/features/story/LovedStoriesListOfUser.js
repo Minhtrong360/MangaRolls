@@ -45,11 +45,6 @@ function LovedStoriesListOfUser() {
     });
   }, [lovedStoriesOfUser]);
 
-  console.log("lovedStoriesOfUser", lovedStoriesOfUser);
-  console.log("fakeData", fakeData);
-  console.log("page", page);
-  console.log("totalPages", totalPages);
-
   return (
     <Container sx={{ display: "flex", mt: 3 }}>
       <Stack sx={{ flexGrow: 1 }}>

@@ -82,8 +82,6 @@ function ChapterContent() {
     zIndex: 2,
   }));
 
-  console.log("chapter", chapter);
-
   return (
     <Container sx={{ my: 5, overflowAnchor: "none" }}>
       <Box sx={{ position: "relative", height: 1 }}>

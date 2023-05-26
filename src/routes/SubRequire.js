@@ -10,14 +10,11 @@ function SubRequire({ children }) {
   let from = location.state?.from?.pathname || "/";
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
-  console.log("user", user);
 
   const handleClickOk = () => {
-    console.log("handleClickOk");
     navigate("/subscription", { state: { from: location }, replace: true });
   };
   const handleClickHong = () => {
-    console.log("handleClickHong");
     navigate(from, { replace: true });
   };
 

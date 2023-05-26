@@ -163,7 +163,6 @@ export const getLovedStoriesOfUser =
       const response = await apiService2.get(`/stories/user/${userId}/loved`, {
         params,
       });
-      console.log("getLovedStoriesOfUser", response.data.data);
 
       dispatch(slice.actions.getLovedStoriesOfUserSuccess(response.data.data));
     } catch (error) {

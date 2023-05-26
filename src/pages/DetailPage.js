@@ -78,8 +78,6 @@ function DetailPage() {
   const { user } = useAuth();
   const { mode } = useContext(ThemeContext);
 
-  console.log("ThemeProvider", mode);
-
   useEffect(() => {
     if (params.id) {
       dispatch(getSingleStory({ storyId: params.id }));
@@ -114,7 +112,6 @@ function DetailPage() {
     if (!user) {
       navigate("/login");
     } else {
-      console.log("user");
       dispatch(updateLovedStory({ userId: user?._id, lovedStory: story?._id }));
     }
   };

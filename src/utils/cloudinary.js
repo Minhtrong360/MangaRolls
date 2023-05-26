@@ -27,7 +27,6 @@ export const cloudinaryUpload = async (files) => {
       }
     }
 
-    console.log("cloudinaryUpload2", imageUrls);
     return imageUrls;
   } catch (error) {
     throw error;
@@ -89,8 +88,6 @@ async function processImageFile(file, formData, imageUrls) {
     data: formData,
     headers: { "Content-Type": "multipart/form-data" },
   });
-
-  console.log("cloudinaryUpload", response.data);
 
   const imageUrl = response.data.secure_url;
   imageUrls.push(imageUrl);

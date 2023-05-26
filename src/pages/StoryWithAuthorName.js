@@ -19,7 +19,6 @@ function StoryWithAuthorName() {
   const dispatch = useDispatch();
   const params = useParams();
   const authorName = params.authorName;
-  console.log("authorName", authorName);
 
   useEffect(() => {
     if (params.authorName) {

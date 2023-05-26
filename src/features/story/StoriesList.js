@@ -2,7 +2,6 @@ import { Grid } from "@mui/material";
 import StoryCard from "./ProductCard";
 
 function StoriesList({ stories }) {
-  console.log("stories", stories);
   return (
     <Grid container spacing={2} mt={1} sx={{ overflow: "hidden" }}>
       {stories
