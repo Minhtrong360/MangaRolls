@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createChapter, updateChapter } from "./chapterSlice";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import JSZip from "jszip";
 
 const UpdateUserSchema = yup.object().shape({
   title: yup.string().required("Chapter also needs a title"),
@@ -61,28 +62,53 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
     },
     [setValue, methods]
   );
-
+  function isImageFile(filename) {
+    console.log("isImageFile", filename);
+    const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif"];
+    const ext = filename?.toLowerCase().substr(filename.lastIndexOf("."));
+    return allowedExtensions.includes(ext);
+  }
   const handleDropContent = useCallback(
-    (acceptedFiles) => {
+    async (acceptedFiles) => {
       const contentFiles = acceptedFiles.map((file) =>
         Object.assign(file, {
           preview: URL.createObjectURL(file),
         })
       );
-      if (!isEditing) {
-        setValue("content", [
-          ...(methods.getValues().content || []),
-          ...contentFiles,
-        ]);
-      }
-      if (isEditing) {
-        setValue("content", [...contentFiles]);
-      }
-      setContent(methods.getValues().content);
-    },
+      if (isImageFile(contentFiles[0].name)) {
+        if (!isEditing) {
+          setValue("content", [
+            ...(methods.getValues().content || []),
+            ...contentFiles,
+          ]);
+        }
+        if (isEditing) {
+          setValue("content", [...contentFiles]);
+        }
+        setContent(methods.getValues().content);
+      } else {
+        const zipFiles = [];
+        await Promise.all(
+          acceptedFiles.map(async (file) => {
+            const zip = new JSZip();
+            const zipData = await zip.loadAsync(file);
+            const zipEntries = Object.keys(zipData.files); // Get the file names as an array
 
+            zipFiles.push({
+              fileName: file.name,
+              entries: zipEntries,
+            });
+          })
+        );
+
+        setContent(zipFiles);
+        console.log("setContent:", zipFiles);
+      }
+    },
     [setValue, methods]
   );
+  console.log("setContent:", content);
+
   const handleClickCancel = async () => {
     reset();
     setAvatar([]);
@@ -92,6 +118,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
   };
 
   const onSubmit = (data) => {
+    console.log("onSubmit", data);
     if (!isEditing) {
       if (!cancel) {
         dispatch(createChapter([{ storyId }, { ...data }]));
@@ -114,6 +141,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
       }
     }
   };
+  const allImages = content?.every((file) => isImageFile(file.name));
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -231,22 +259,29 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                   >
                     Chapter content
                   </Typography>
-                  {content?.map((file) => (
-                    <img
-                      key={file?.preview}
-                      src={file?.preview ? file?.preview : file}
-                      alt=""
-                      style={{
-                        maxWidth: "100%",
-                        maxHeight: "100%",
-                        marginBottom: 10,
-                      }}
-                    />
-                  ))}
+
+                  {allImages
+                    ? content?.map((file, index) => (
+                        <img
+                          key={file.preview}
+                          src={file.preview ? file.preview : file}
+                          alt=""
+                          style={{
+                            maxWidth: "100%",
+                            maxHeight: "100%",
+                            marginBottom: 10,
+                          }}
+                        />
+                      ))
+                    : content?.map((file, index) => (
+                        <div key={index} style={{ marginBottom: 5 }}>
+                          <span>{file.fileName}</span>
+                        </div>
+                      ))}
 
                   <FUploadImage
                     name="content"
-                    accept="image/*"
+                    accept="image/*,.zip"
                     maxSize={3145728}
                     onDrop={handleDropContent}
                     helperText={
@@ -260,7 +295,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                           color: "text.secondary",
                         }}
                       >
-                        Allow *.jpeg, *.jpg, *.png, *.gif
+                        Allow *.jpeg, *.jpg, *.png, *.gif *.zip
                       </Typography>
                     }
                     multiple
