@@ -5,17 +5,16 @@ import {
   Button,
   Container,
   Divider,
+  Grid,
+  Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
-
-import LoadingScreen from "../../components/LoadingScreen";
-
 import StoriesList from "../story/StoriesList";
 
 import { Link } from "react-router-dom";
 
-function StoriesWithGenres({ AllStories, genres, isLoading, error }) {
+function StoriesWithGenres({ AllStories, genres, isLoading }) {
   let storiesWithGenres = AllStories.filter((story) =>
     story.genres
       .map((genre) => genre.toLowerCase())
@@ -50,15 +49,36 @@ function StoriesWithGenres({ AllStories, genres, isLoading, error }) {
 
       <Box sx={{ position: "relative", height: 1 }}>
         {isLoading ? (
-          <LoadingScreen />
+          <Grid container spacing={2}>
+            {[...Array(8)].map((_, index) => (
+              <Grid
+                key={index}
+                item
+                xs={4}
+                md={3}
+                lg={2}
+                sx={{
+                  transition: "all 0.6s ease-out",
+                  transform: "translateX(0%)",
+                }}
+              >
+                <Skeleton
+                  variant="rectangular"
+                  width="10.5em"
+                  height="11.5em"
+                  style={{ marginTop: 15 }}
+                />
+                <Skeleton
+                  variant="rectangular"
+                  width="10.5em"
+                  height="3em"
+                  style={{ marginTop: 5 }}
+                />
+              </Grid>
+            ))}
+          </Grid>
         ) : (
-          <>
-            {error ? (
-              <Alert severity="error">{error}</Alert>
-            ) : (
-              <StoriesList stories={storiesWithGenres} />
-            )}
-          </>
+          <StoriesList stories={storiesWithGenres} />
         )}
       </Box>
     </Container>

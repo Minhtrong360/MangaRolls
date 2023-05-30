@@ -23,6 +23,7 @@ import LovedStoriesListOfUser from "../features/story/LovedStoriesListOfUser";
 import StoryWithAuthorName from "../pages/StoryWithAuthorName";
 import StoryWithArtist from "../pages/StoryWithArtist";
 import AdminPage from "../pages/AdminPage";
+import ChapterCreate from "../features/chapter/ChapterCreate";
 
 // import AuthRequire from "./AuthRequire";
 
@@ -66,9 +67,7 @@ function Router() {
 
         <Route path="/account" element={<AccountPage />} />
         <Route path="/subscription" element={<Subscription />} />
-
         <Route path="/chapter/:id" element={<ChapterContent />} />
-
         <Route path="/search" element={<AllSearchStories />} />
       </Route>
 

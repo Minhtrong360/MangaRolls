@@ -61,7 +61,7 @@ function EditStoryAndChapterPage() {
           <>
             <Card>
               <Grid container>
-                <Grid item xs={12} md={6} lg={12}>
+                <Grid item xs={12} md={12} lg={12}>
                   <Typography
                     variant="h4"
                     sx={{
@@ -91,7 +91,7 @@ function EditStoryAndChapterPage() {
                     <StoryEdit story={story} />
                   </Box>
 
-                  <Grid item xs={6} md={4} lg={12}>
+                  <Grid item xs={12} md={12} lg={12}>
                     {chaptersOfStory?.length > 0 && (
                       <Box
                         sx={{
@@ -106,6 +106,8 @@ function EditStoryAndChapterPage() {
                           sx={{
                             overflow: "auto",
                             textAlign: "center",
+                            fontWeight: 600,
+                            fontSize: { xs: "1em", md: "1.2em" },
                           }}
                         >
                           LIST OF CHAPTERS
@@ -113,7 +115,7 @@ function EditStoryAndChapterPage() {
                       </Box>
                     )}
 
-                    <Grid item xs={6} md={4} lg={12}>
+                    <Grid item xs={12} md={12} lg={12}>
                       {chaptersOfStory?.slice(0, 15).map((chapter, index) => (
                         <ChapterEdit
                           chapter={chapter}
@@ -127,7 +129,7 @@ function EditStoryAndChapterPage() {
                     <Stack p={2} />
                   </Grid>
                 </Grid>
-                <Grid item xs={12} md={6} lg={12}>
+                <Grid item xs={12} md={12} lg={12}>
                   <ChapterCreate storyEditing={story} />
                 </Grid>
               </Grid>

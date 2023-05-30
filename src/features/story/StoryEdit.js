@@ -95,108 +95,115 @@ function StoryEdit({ story }) {
   };
 
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3} width="100vh">
-        <Grid item xs={12} md={4}>
-          <Card
-            sx={{ py: 10, px: 3, textAlign: "center", justifyItems: "center" }}
-          >
-            <FUploadAvatar
-              name="cover"
-              accept="image/*"
-              maxSize={3145728}
-              onDrop={handleDrop}
-              helperText={
-                <Typography
-                  variant="caption"
-                  sx={{
-                    mt: 2,
-                    mx: "auto",
-                    display: "block",
-                    textAlign: "center",
-                    color: "text.secondary",
-                    justifyItems: "center",
-                  }}
-                >
-                  Allow *.jpeg, *.jpg, *.png, *.gif
-                  <br /> Max size {fData(3145728)}
-                </Typography>
-              }
-            />
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={7}>
-          <Card sx={{ p: 3 }}>
-            <Box
+    <div style={{ paddingLeft: 0, width: "100%" }}>
+      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={5}>
+            <Card
               sx={{
-                display: "grid",
-                rowGap: 3,
-                columnGap: 10,
+                py: 10,
+                px: 3,
+                textAlign: "center",
+                justifyItems: "center",
               }}
             >
-              <FTextField name="title" label="Title" />
-              <FTextField name="authorName" label="Author name" />
+              <FUploadAvatar
+                name="cover"
+                accept="image/*"
+                maxSize={3145728}
+                onDrop={handleDrop}
+                helperText={
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      mt: 2,
+                      mx: "auto",
+                      display: "block",
+                      textAlign: "center",
+                      color: "text.secondary",
+                      justifyItems: "center",
+                    }}
+                  >
+                    Allow *.jpeg, *.jpg, *.png, *.gif
+                    <br /> Max size {fData(3145728)}
+                  </Typography>
+                }
+              />
+            </Card>
+          </Grid>
 
-              <FTextField name="artist" label="Artist" />
-              <Autocomplete
-                multiple
-                id="genres"
-                disableCloseOnSelect
-                options={allowGenres}
-                value={selectedGenres}
-                onChange={handleGenresChange}
-                getOptionLabel={(option) => option}
-                renderOption={(props, option, { selected }) => (
-                  <li {...props}>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={selected}
-                            color="primary"
-                            value={option}
-                            multiple
-                          />
-                        }
-                        label={option}
-                        multiple
-                      />
-                    </FormGroup>
-                  </li>
-                )}
-                renderInput={(params) => (
-                  <FTextField {...params} name="genres" label="Genres" />
-                )}
-              />
-              <FTextField name="minimumAge" label="Minimum age" />
-              <FTextField
-                name="summarize"
-                multiline
-                rows={4}
-                label="Summarize"
-              />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-                mt: 3,
-              }}
-            >
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                loading={isSubmitting || isLoading}
+          <Grid item xs={12} md={7}>
+            <Card sx={{ p: 3 }}>
+              <Box
+                sx={{
+                  display: "grid",
+                  rowGap: 3,
+                  columnGap: 10,
+                }}
               >
-                Save
-              </LoadingButton>
-            </Box>
-          </Card>
+                <FTextField name="title" label="Title" />
+                <FTextField name="authorName" label="Author name" />
+
+                <FTextField name="artist" label="Artist" />
+                <Autocomplete
+                  multiple
+                  id="genres"
+                  disableCloseOnSelect
+                  options={allowGenres}
+                  value={selectedGenres}
+                  onChange={handleGenresChange}
+                  getOptionLabel={(option) => option}
+                  renderOption={(props, option, { selected }) => (
+                    <li {...props}>
+                      <FormGroup>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={selected}
+                              color="primary"
+                              value={option}
+                              multiple
+                            />
+                          }
+                          label={option}
+                          multiple
+                        />
+                      </FormGroup>
+                    </li>
+                  )}
+                  renderInput={(params) => (
+                    <FTextField {...params} name="genres" label="Genres" />
+                  )}
+                />
+                <FTextField name="minimumAge" label="Minimum age" />
+                <FTextField
+                  name="summarize"
+                  multiline
+                  rows={4}
+                  label="Summarize"
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "flex-end",
+                  mt: 3,
+                }}
+              >
+                <LoadingButton
+                  type="submit"
+                  variant="contained"
+                  loading={isSubmitting || isLoading}
+                >
+                  Save
+                </LoadingButton>
+              </Box>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-    </FormProvider>
+      </FormProvider>
+    </div>
   );
 }
 

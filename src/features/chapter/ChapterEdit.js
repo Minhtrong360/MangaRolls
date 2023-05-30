@@ -27,7 +27,7 @@ function ChapterEdit({ chapter, loading, error, storyEditing }) {
         sx={{
           position: "relative",
           height: 1,
-          width: "50vw",
+          width: { xs: "100%", md: "70%" },
         }}
       >
         {loading ? (
@@ -44,13 +44,14 @@ function ChapterEdit({ chapter, loading, error, storyEditing }) {
                       <Grid
                         item
                         xs={12}
-                        md={6}
+                        md={12}
                         lg={12}
                         sx={{
                           borderRadius: 2,
                           overflow: "hidden",
                           display: "flex",
                           flexDirection: "row",
+                          justifyContent: "center",
                         }}
                       >
                         <Box p={2}>
@@ -73,54 +74,58 @@ function ChapterEdit({ chapter, loading, error, storyEditing }) {
                                   src={chapter?.avatar[0]}
                                   alt="chapter"
                                 />
+
                                 <Box>
+                                  <Typography
+                                    color="text.primary"
+                                    p={2}
+                                    sx={{
+                                      overflow: "auto",
+                                      textAlign: "justify",
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      fontSize: "0.8em",
+                                    }}
+                                  >
+                                    Chương {chapter?.number + 1}
+                                  </Typography>
+                                  <Typography
+                                    color="text.primary"
+                                    fontSize="1em"
+                                    p={2}
+                                    sx={{
+                                      overflow: "auto",
+                                      textAlign: "justify",
+                                      fontSize: "0.8em",
+                                    }}
+                                  >
+                                    {chapter?.createdAt?.slice(0, 10)}
+                                  </Typography>
                                   <Box>
-                                    <Typography
-                                      color="text.primary"
-                                      p={2}
-                                      sx={{
-                                        overflow: "auto",
-                                        textAlign: "justify",
-                                        display: "flex",
-                                        flexDirection: "column",
+                                    <Button
+                                      sx={{ fontSize: "0.8em" }}
+                                      onClick={() =>
+                                        navigate(`/chapter/${chapter._id}`)
+                                      }
+                                    >
+                                      Read
+                                    </Button>
+                                    <Button
+                                      sx={{ fontSize: "0.8em" }}
+                                      onClick={(e) => {
+                                        setIsEditing(true);
                                       }}
                                     >
-                                      Chương {chapter?.number + 1}
-                                    </Typography>
-                                    <Typography
-                                      color="text.primary"
-                                      fontSize="14px"
-                                      p={2}
-                                      sx={{
-                                        overflow: "auto",
-                                        textAlign: "justify",
+                                      Edit
+                                    </Button>
+                                    <Button
+                                      sx={{ fontSize: "0.8em" }}
+                                      onClick={() => {
+                                        handleDeleteChapter(chapter?.title);
                                       }}
                                     >
-                                      {chapter?.createdAt?.slice(0, 10)}
-                                    </Typography>
-                                    <Box>
-                                      <Button
-                                        onClick={() =>
-                                          navigate(`/chapter/${chapter._id}`)
-                                        }
-                                      >
-                                        Read
-                                      </Button>
-                                      <Button
-                                        onClick={(e) => {
-                                          setIsEditing(true);
-                                        }}
-                                      >
-                                        Edit
-                                      </Button>
-                                      <Button
-                                        onClick={() => {
-                                          handleDeleteChapter(chapter?.title);
-                                        }}
-                                      >
-                                        Delete
-                                      </Button>
-                                    </Box>
+                                      Delete
+                                    </Button>
                                   </Box>
                                 </Box>
                               </>

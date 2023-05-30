@@ -189,7 +189,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
-                  width: "50%",
+                  width: { xs: "30%", md: "50%" },
                 }}
               >
                 <Typography
@@ -298,11 +298,11 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                   />
                 </Card>
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={6}>
                 <LoadingButton
                   type="submit"
                   variant="contained"
-                  sx={{ minWidth: "100px" }}
+                  sx={{ maxWidth: "100px" }}
                   loading={isSubmitting || isLoading}
                 >
                   Upload
@@ -310,7 +310,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
                 <LoadingButton
                   type="submit"
                   variant="contained"
-                  sx={{ minWidth: "100px", marginLeft: 2 }}
+                  sx={{ maxWidth: "100px", marginLeft: 2 }}
                   onClick={() => handleClickCancel()}
                 >
                   Cancel

@@ -13,14 +13,9 @@ function ProductCard({ story }) {
   return (
     <Card component={Link} to={`/story/${story?._id}`}>
       <Box sx={{ position: "relative" }} minHeight={120}>
-        <CardActionArea
-        // minHeight={120}
-        // sx={{ bgcolor: "gray" }}
-        // image={typeof story?.cover === "string" ? story.cover : ""}
-        >
+        <CardActionArea>
           <CardMedia
             component="img"
-            // height="400"
             image={story?.cover || ""}
             alt={story?.title}
             sx={{ objectFit: "fill" }}
