@@ -97,6 +97,7 @@ function ChapterCreate({ chapter, isEditing, storyEditing, setIsEditing }) {
               fileName: file.name,
               entries: zipEntries,
             });
+            setValue("content", [...acceptedFiles]);
           })
         );
 

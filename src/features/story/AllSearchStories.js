@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import { getStories } from "./storySlice";
 import LoadingScreen from "../../components/LoadingScreen";
 import ClickableLinkChips from "../../components/form/ClickableLinkChips";
+import unorm from "unorm";
 
 function AllSearchStories() {
   const { AllStories, isLoading } = useSelector((state) => state.story);
@@ -22,9 +23,20 @@ function AllSearchStories() {
   useEffect(() => {
     dispatch(getStories({ page: 1, limit: 10000 }));
   }, [dispatch]);
-  let result = AllStories.filter((story) =>
-    story.title.toLowerCase().includes(query.toLowerCase())
-  );
+
+  const removeDiacritics = (str) => {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  };
+
+  const normalizedQuery = removeDiacritics(query.toLowerCase());
+
+  const result = AllStories.filter((story) => {
+    const normalizedTitle = removeDiacritics(story.title.toLowerCase());
+
+    console.log("normalizedTitle", normalizedTitle);
+    return normalizedTitle.includes(normalizedQuery);
+  });
+
   const sortedStories =
     AllStories.length > 0
       ? [...AllStories].sort((a, b) => b?.view - a?.view)

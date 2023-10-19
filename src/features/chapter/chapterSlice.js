@@ -111,6 +111,7 @@ export const createChapter =
   ([{ storyId }, { title, avatar, content }]) =>
   async (dispatch) => {
     dispatch(slice.actions.startLoading());
+
     try {
       const avatarUrl = await cloudinaryUpload(avatar);
       const contentUrl = await cloudinaryUpload(content);

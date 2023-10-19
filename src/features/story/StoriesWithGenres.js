@@ -64,15 +64,18 @@ function StoriesWithGenres({ AllStories, genres, isLoading }) {
               >
                 <Skeleton
                   variant="rectangular"
-                  width="10.5em"
-                  height="11.5em"
-                  style={{ marginTop: 15 }}
+                  sx={{
+                    width: { xs: "6em", md: "10.5em" },
+                    height: { xs: "8em", md: "11.5em" },
+                  }}
                 />
                 <Skeleton
                   variant="rectangular"
-                  width="10.5em"
-                  height="3em"
-                  style={{ marginTop: 5 }}
+                  sx={{
+                    width: { xs: "6em", md: "10.5em" },
+                    height: { xs: "2em", md: "3em" },
+                    marginTop: 1,
+                  }}
                 />
               </Grid>
             ))}

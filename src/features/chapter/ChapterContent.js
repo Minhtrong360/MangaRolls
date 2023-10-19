@@ -73,11 +73,9 @@ function ChapterContent() {
     justifyContent: "flex-start",
 
     position: "absolute",
-    right: "-250px",
-    bottom: "130px",
 
-    height: "565px", // set the height to 565px
-    width: "400px", // set the width to 375px
+    bottom: "7em",
+
     padding: theme.spacing(2),
     zIndex: 2,
   }));

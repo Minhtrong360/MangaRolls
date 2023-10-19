@@ -12,11 +12,11 @@ const ChatBoxWrapper = styled(Paper)(({ theme }) => ({
   justifyContent: "flex-end",
 
   position: "absolute",
-  right: "-250px",
-  bottom: "130px",
+  right: "2.5em",
+  bottom: "7em",
 
-  height: "565px", // set the height to 565px
-  width: "400px", // set the width to 375px
+  height: "30em", // set the height to 565px
+  width: "20em", // set the width to 375px
   padding: theme.spacing(2),
   zIndex: 5,
   "& form": {
